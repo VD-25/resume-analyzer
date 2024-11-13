@@ -1,14 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
+import SignUp from './SignUp'
 import LoginPage from './LoginPage';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <LoginPage />
-    </div>
+    <Router>
+      <div>
+        {/* Navigation links */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/signup">Sign Up</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Define routes */}
+        <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
