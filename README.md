@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Team 14 Resume Analyzer Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description: 
+A platform where users can upload resumes and receive feedback on improving them, with personalized job recommendations based on resume content.
 
-## Available Scripts
+## Team Members - contact info:
+- Vidhi Dholakia (PM) - vd286@njit.edu
+- Felix Chen - fc37@njit.edu
+- Truong Dang - tdd4@njit.edu
+- Daniel Helmer - dlh4@njit.edu
+- Ricardo Cruz - rc68@njit.edu
 
-In the project directory, you can run:
+## Project Overview: 
+This app would enable students to upload their resumes and receive AI-driven feedback, such as suggestions on wording, structure, and missing skills. Additionally, it could recommend job listings or career paths based on the resume’s content, comparing keywords and skills with job market trends.
 
-### `npm start`
+### Tech Stack:
+- Javascript
+- *(will update with more in the future)*
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Goals: 
+- Upload resume functionality with simple text parsing.
+- Basic NLP analysis to highlight missing skills or format suggestions (focusing on predefined keywords).
+- Basic job matching using a limited dataset of sample job descriptions.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Steps to set up project locally:
+1. git clone "repo url"
+2. Create issue on github with task template
+3. Create a new branch on that issue
+4. Checkout locally, copy paste code into local git terminal
+5. If pulling from online repo: git checkout main; git pull
+6. To commit changes:
+  - git add .
+  - git commit -m "comment"
+  - git push origin main
