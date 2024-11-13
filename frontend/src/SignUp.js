@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import useSharedList from './useSharedList';
 
 const SignUp = () => {
   // State to store form fields
