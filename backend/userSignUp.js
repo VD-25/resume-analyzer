@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { generateToken, verifyToken } = require('./jwtHelper');
+const generateToken = require('./helper/generateToken');
+const verifyToken = require("./helper/verifyToken");
 
 const app = express();
 app.use(express.json());
