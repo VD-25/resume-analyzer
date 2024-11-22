@@ -1,72 +1,71 @@
-
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const SignUp = () => {
-  // State to store form fields
+  // Separate useState hooks for each input field
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // State to store the list of users
-  const [users, setUsers] = useState([]);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  // Handlers for input changes
+  const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate form fields (simple check for now)
-    if (username && password) {
-      // Add new user to the users list
-      setUsers([...users,{username, password }]);
 
-      //shared code below
-      // useSharedList.addItem([...users,{username, password }]);
-      // alert(useSharedList.users);
+    // Prepare the form data object to send in the POST request
+    const formData = { email, username, password };
 
-
-
-      // Reset form fields
-      setUsername('');
-      setPassword('');  
-      
-      alert(users);
-    } else {
-      alert('Please enter both username and password!');
+    try {
+      // Send the data to the backend using Axios
+      const response = await axios.post('http://localhost:3000/api/register', formData);
+      setSuccess(response.data.message);
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Something went wrong');
+      setSuccess('');
     }
   };
 
   return (
     <div>
-      <h2>User Sign Up</h2>
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username: </label>
+          <label>Username</label>
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            onChange={handleUsernameChange}
           />
         </div>
         <div>
-          <label>Password: </label>
+          <label>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </div>
+        <div>
+          <label>Password</label>
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            onChange={handlePasswordChange}
           />
         </div>
         <button type="submit">Sign Up</button>
       </form>
 
-      <h3>Registered Users</h3>
-      <ul>
-        {users.map((user, index) => (
-          <li key={index}>
-            {user.username} - {user.password}
-          </li>
-        ))}
-      </ul>
+      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
