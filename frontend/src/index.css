@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  font-family: 'Century Gothic';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: 'Century Gothic', monospace;
+}
