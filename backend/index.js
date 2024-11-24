@@ -1,4 +1,5 @@
-const app = require('./userSignUp');  // Import app from server.js
+const app = require('./userSignUp');
+const { extractTextFromPdf } = require("./pdfExtractor");
 
 const PORT = 3000;
 app.listen(PORT, () => {
