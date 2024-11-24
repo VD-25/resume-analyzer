@@ -71,3 +71,47 @@
     min-height: 120px; /* Set a minimum height for the textarea */
     margin-bottom: 15px; /* Space below the textarea */
   }
+  
+  /* App.css or DataDisplayComponent.css */
+.data-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.data-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.data-item {
+  padding: 8px 0;
+  font-size: 16px;
+  color: #444;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #007bff;
+}
+
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: red;
+}

@@ -4,14 +4,19 @@ import './App.css';
 import SignUp  from './components/SignUp'
 import LoginPage from './components/LoginPage';
 import ResumeUpload from './components/ResumeUpload';
+import AnalysisPage from './components/AnalysisPage';
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [isUploaded, setIsUploaded] = useState(false);
   // This function will be passed as a prop to Login and will be called on success
   const handleLogin = (status) => {
     setIsLoggedIn(status); // Set to true when the login is successful
   };
+  const handleUpload = (status) => {
+    setIsUploaded(true);
+  }
 
   const handleLogout = () => {
     console.log("User logged out.");
@@ -37,6 +42,9 @@ const App = () => {
               <Link to="/upload" className="navbar-link">Upload</Link>
             </li>
             <li>
+              <Link to="/analysis" className="navbar-link">Analysis</Link>
+            </li>
+            <li>
               <Link to="/signup" className="navbar-link">Sign Up</Link>
             </li>
             <li>
@@ -57,9 +65,10 @@ const App = () => {
         {/* Define routes */}
         <Routes>
           <Route path="/logout" element={<LoginPage />} />
+          <Route path="/analysis" element={(isLoggedIn && isUploaded)? <AnalysisPage /> : <p>Please Login or Upload to view analysis page</p>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LoginPage onLoginSuccess={handleLogin}/>} />
-          <Route path="/upload" element={isLoggedIn ? <ResumeUpload /> : <p>Please Login to view upload page</p>}/>
+          <Route path="/upload" element={isLoggedIn ? <ResumeUpload onUploadSuccess={handleUpload}/> : <p>Please Login to view upload page</p>}/>
         </Routes>
       </div>
     </Router>

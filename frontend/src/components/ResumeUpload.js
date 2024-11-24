@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "./styles.css"
 
-const ResumeUpload = () => {
+const ResumeUpload = ({onUploadSuccess}) => {
   // State for the file and text input
   const [pdfFile, setPdfFile] = useState(null);
   const [textInput, setTextInput] = useState('');
@@ -15,6 +15,7 @@ const ResumeUpload = () => {
     const file = e.target.files[0];
     if (file && file.type === 'application/pdf') {
       setPdfFile(file);
+      onUploadSuccess(true);
       setError('');  // Clear error if file is valid
     } else {
       setError('Please upload a valid PDF file.');
