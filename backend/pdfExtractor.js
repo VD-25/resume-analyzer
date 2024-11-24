@@ -1,4 +1,4 @@
-const pdfParse = require('pdf-parse');
+const pdfParse = require("pdf-parse");
 
 async function extractTextFromPdf(fileBuffer) {
   const data = await pdfParse(fileBuffer);
@@ -6,4 +6,3 @@ async function extractTextFromPdf(fileBuffer) {
 }
 
 module.exports = { extractTextFromPdf };
-
