@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import SignUp from './SignUp'
-import LoginPage from './LoginPage';
-import ResumeUpload from './ResumeUpload';
+import SignUp from './components/SignUp'
+import LoginPage from './components/LoginPage';
+import ResumeUpload from './components/ResumeUpload';
 
 
 const App = () => {
@@ -65,5 +65,6 @@ const App = () => {
     </Router>
   );
 };
+
 
 export default App;
