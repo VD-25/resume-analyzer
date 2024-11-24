@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./styles.css"
+
 
 const SignUp = () => {
   // Separate useState hooks for each input field
@@ -35,12 +37,15 @@ const SignUp = () => {
 
   return (
     <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-container">
+      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
         <div>
+        <h2>Sign Up</h2>
           <label>Username</label>
           <input
             type="text"
+            className="input-field"
             value={username}
             onChange={handleUsernameChange}
           />
@@ -49,6 +54,7 @@ const SignUp = () => {
           <label>Email</label>
           <input
             type="email"
+            className="input-field"
             value={email}
             onChange={handleEmailChange}
           />
@@ -57,15 +63,15 @@ const SignUp = () => {
           <label>Password</label>
           <input
             type="password"
+            className="input-field"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className='submit-btn'>Sign Up</button>
       </form>
 
-      {success && <p style={{ color: 'green' }}>{success}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      
     </div>
   );
 };

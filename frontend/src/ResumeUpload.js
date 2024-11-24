@@ -77,7 +77,7 @@ const ResumeUpload = () => {
   };
 
   return (
-    <div className="upload-container">
+    <div className="form-container">
       <h2>Upload PDF and Text</h2>
 
       {error && <p className="error-message">{error}</p>}
@@ -85,10 +85,11 @@ const ResumeUpload = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="pdfFile">Upload PDF:</label>
+          <label htmlFor="pdfFile"></label>
           <input
             type="file"
             id="pdfFile"
+            className='input-field'
             accept="application/pdf"
             onChange={handleFileChange}
           />
@@ -98,6 +99,7 @@ const ResumeUpload = () => {
           <label htmlFor="textInput">Text (Max 500 words):</label>
           <textarea
             id="textInput"
+            className='textarea-field'
             value={textInput}
             onChange={handleTextChange}
             rows="6"
@@ -108,7 +110,7 @@ const ResumeUpload = () => {
           </p>
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" className='submit-btn' disabled={loading}>
           {loading ? 'Uploading...' : 'Upload'}
         </button>
       </form>
