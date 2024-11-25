@@ -131,7 +131,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
             placeholder="Enter text here"
           />
           <p className="word-count">
-            {textInput.trim().split(/\s+/).length} / 5000 characters
+            {textInput.length} / 5000 characters
           </p>
         </div>
         {loading && <Spinner />}
