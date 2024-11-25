@@ -99,7 +99,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
