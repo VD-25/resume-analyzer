@@ -10,7 +10,7 @@ app.use(express.json());
 const users = {};
 
 // Endpoint: User Registration
-app.post('/api/register', async (req, res) => {
+app.post('/register', async (req, res) => {
   const { email, username, password } = req.body;
 
   // Check if email is already in use
@@ -29,7 +29,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // Endpoint: User Login
-app.post('/api/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   // Check if both email and password are provided
@@ -58,7 +58,7 @@ app.post('/api/login', async (req, res) => {
 
 
 // Endpoint: Protected Route
-app.get('/api/protected', (req, res) => {
+app.get('/protected', (req, res) => {
   const token = req.header('Authorization')?.split(' ')[1]; // Get the token from Authorization header
 
   // Check if the token is valid
