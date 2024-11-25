@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./styles.css"
+import Spinner from './Spinner';
 
 const ResumeUpload = ({onUploadSuccess}) => {
   // State for the file and text input
@@ -98,7 +99,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
@@ -133,7 +134,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
             {textInput.trim().split(/\s+/).length} / 5000 characters
           </p>
         </div>
-
+        {loading && <Spinner />}
         <button type="submit" className='submit-btn' disabled={loading}>
           {loading ? 'Uploading...' : 'Upload'}
         </button>
