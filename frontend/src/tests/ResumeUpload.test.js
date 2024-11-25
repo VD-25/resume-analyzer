@@ -3,7 +3,6 @@ import ResumeUpload from '../components/ResumeUpload'; // Adjust path as necessa
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-// Set up mock adapter for axios
 const mockAxios = new MockAdapter(axios);
 
 describe('ResumeUpload Component', () => {
@@ -15,7 +14,7 @@ describe('ResumeUpload Component', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
     // Check if the file input and text input are rendered
-    expect(screen.getByLabelText(/Choose a PDF/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Upload PDF File:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Text \(Max 5000 characters\):/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Upload/i })).toBeInTheDocument();
   });
@@ -24,7 +23,7 @@ describe('ResumeUpload Component', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
     // Simulate file input with a non-PDF file
-    const fileInput = screen.getByLabelText(/Choose a PDF/i);
+    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'test.txt', { type: 'text/plain' })] },
     });
@@ -32,18 +31,19 @@ describe('ResumeUpload Component', () => {
     expect(screen.getByText(/Please upload a valid PDF file./i)).toBeInTheDocument();
   });
 
-  test('shows error if file is larger than 2MB', () => {
+  test('shows error if file is larger than 2MB', async () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
-
-    // Simulate file input with a PDF larger than 2MB
-    const fileInput = screen.getByLabelText(/Choose a PDF/i);
-    fireEvent.change(fileInput, {
-      target: { files: [new File(['dummy content'], 'large.pdf', { type: 'application/pdf' })] },
+  
+    // Simulate selecting a large file (3MB)
+    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    const largeFile = new File(['a'.repeat(3 * 1024 * 1024)], 'large.pdf', { type: 'application/pdf' });
+    fireEvent.change(fileInput, { target: { files: [largeFile] } });
+  
+    await waitFor(() => {
+      expect(screen.getByText(/File must be smaller than 2MB./i)).toBeInTheDocument();
     });
-
-    expect(screen.getByText(/File must be smaller than 2MB./i)).toBeInTheDocument();
   });
-
+  
   test('enforces 5000-character limit on text input', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
@@ -59,7 +59,7 @@ describe('ResumeUpload Component', () => {
     mockAxios.onPost('http://localhost:3000/api/upload').reply(200, { message: 'Success' });
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
-    const fileInput = screen.getByLabelText(/Choose a PDF/i);
+    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
@@ -82,7 +82,7 @@ describe('ResumeUpload Component', () => {
     mockAxios.onPost('http://localhost:3000/api/upload').reply(500, { message: 'Internal Server Error' });
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
-    const fileInput = screen.getByLabelText(/Choose a PDF/i);
+    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
@@ -101,7 +101,7 @@ describe('ResumeUpload Component', () => {
     mockAxios.onPost('http://localhost:3000/api/upload').reply(200, { message: 'Success' });
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
-    const fileInput = screen.getByLabelText(/Choose a PDF/i);
+    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
