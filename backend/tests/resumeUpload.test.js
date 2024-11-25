@@ -1,10 +1,9 @@
 const request = require("supertest");
 const express = require("express");
-const resumeUploadRoutes = require("../backend/resumeUpload");
+const resumeUploadRoutes = require("../resumeUpload");
 const path = require("path");
 
 const app = express();
-//app.use("/api", resumeUploadRoutes);
 app.use("/api", resumeUploadRoutes);
 
 describe("Resume Upload API", () => {
