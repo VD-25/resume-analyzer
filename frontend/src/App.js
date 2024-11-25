@@ -8,14 +8,14 @@ import AnalysisPage from './components/AnalysisPage';
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [isUploaded, setIsUploaded] = useState(false);
   // This function will be passed as a prop to Login and will be called on success
   const handleLogin = (status) => {
     setIsLoggedIn(status); // Set to true when the login is successful
   };
   const handleUpload = (status) => {
-    setIsUploaded(true);
+    setIsUploaded(status);
   }
 
   const handleLogout = () => {

@@ -19,6 +19,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
         setPdfFile(null);
       } else {
         setPdfFile(file);
+        onUploadSuccess(true);
         setError('');
       }
     } else {
@@ -57,24 +58,42 @@ const ResumeUpload = ({onUploadSuccess}) => {
     setError('');
 
     // FormData to send file and text as POST request
-    const formData = new FormData();
-    formData.append('pdfFile', pdfFile);
-    formData.append('textInput', textInput);
+    const formDataResume = new FormData();
+    formDataResume.append('resume_file', pdfFile);
+    const jobDescriptionData = { job_description: textInput };
 
     try {
       // Send the data to your backend API (replace URL with your backend endpoint)
-      const response = await axios.post('http://localhost:3000/api/upload', formData, {
+      const response = await axios.post('http://localhost:3000/api/resume-upload', formDataResume, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      setSuccessMessage('File and text uploaded successfully:',response.data);
+      setSuccessMessage('File uploaded successfully:',response.data);
       setPdfFile(null);  // Clear file input after successful upload
+        // Clear text input after successful upload
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setError('There was an error uploading your file. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+
+    try {
+      // Send the data to your backend API (replace URL with your backend endpoint)
+      const response = await axios.post('http://localhost:3000/api/job-description', jobDescriptionData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setSuccessMessage('Text uploaded successfully:',response.data);
+    // Clear file input after successful upload
       setTextInput('');  // Clear text input after successful upload
     } catch (error) {
-      console.error('Error uploading file and text:', error);
-      setError('There was an error uploading your file and text. Please try again.');
+      console.error('Error uploading text:', error);
+      setError('There was an error uploading your text. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -83,13 +102,14 @@ const ResumeUpload = ({onUploadSuccess}) => {
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
-
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
+      
 
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="pdfFile"></label>
+          
+          <label htmlFor="pdfFile">Choose a PDF</label>
           <input
             type="file"
             id="pdfFile"
