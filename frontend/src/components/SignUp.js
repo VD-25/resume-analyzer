@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './styles.css';
+import Spinner from './Spinner';
 
 const SignUp = () => {
   // State for form fields and submission status
@@ -80,7 +81,7 @@ const SignUp = () => {
             onChange={handlePasswordChange}
           />
         </div>
-
+        {loading && <Spinner />}
         <button
           type="submit"
           className="submit-btn"
