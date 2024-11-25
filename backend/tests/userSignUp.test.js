@@ -1,7 +1,12 @@
 const request = require('supertest');
-const app = require('../backend/userSignUp');  // Import the Express app
+const express = require("express");
+const userSignUp = require("../userSignUp");
 
-describe('POST /api/login', () => {
+const app = express();
+app.use(express.json());
+app.use("/api", userSignUp); // Ensure the routes are mounted
+
+describe('POST api/login', () => {
   beforeAll(async () => {
     // Register a user for testing
     await request(app)
