@@ -1,5 +1,15 @@
+const express = require("express");
 const app = require('./userSignUp');
 const { extractTextFromPdf } = require("./pdfExtractor");
+const jobDescriptionRoutes = require("./jobDescription")
+const resumeUploadRoutes = require("./resumeUpload");
+
+const app = express();
+app.use(express.json());
+
+// Mount job description routes under /api
+app.use("/api", jobDescriptionRoutes);
+app.use("/api", resumeUploadRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
