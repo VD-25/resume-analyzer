@@ -84,13 +84,14 @@ const ResumeUpload = ({onUploadSuccess}) => {
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
-
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
+      
 
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="pdfFile"></label>
+          
+          <label htmlFor="pdfFile">Choose a PDF</label>
           <input
             type="file"
             id="pdfFile"
