@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const generateToken = require("../backend/helper/generateToken.js");
+const generateToken = require("../helper/generateToken.js");
 
 // process.env.JWT_SECRET = "testsecret";
 

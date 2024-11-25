@@ -1,7 +1,7 @@
-const storeData = require("../backend/implementTempInMemoryStorage/storeData");
-const { readStorageFile, writeStorageFile } = require("../backend/implementTempInMemoryStorage/fileOperations");
+const storeData = require("../implementTempInMemoryStorage/storeData");
+const { readStorageFile, writeStorageFile } = require("../implementTempInMemoryStorage/fileOperations");
 
-jest.mock("../backend/implementTempInMemoryStorage/fileOperations"); // Mock the file operations
+jest.mock("../implementTempInMemoryStorage/fileOperations"); // Mock the file operations
 
 describe("storeData", () => {
     beforeEach(() => {

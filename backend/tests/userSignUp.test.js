@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../backend/userSignUp');  // Import the Express app
+const app = require('../userSignUp');  // Import the Express app
 
 describe('POST /api/login', () => {
   beforeAll(async () => {

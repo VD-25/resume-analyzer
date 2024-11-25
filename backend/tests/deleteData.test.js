@@ -1,7 +1,7 @@
-const deleteData = require("../backend/implementTempInMemoryStorage/deleteData");
-const { readStorageFile, writeStorageFile } = require("../backend/implementTempInMemoryStorage/fileOperations");
+const deleteData = require("../implementTempInMemoryStorage/deleteData");
+const { readStorageFile, writeStorageFile } = require("../implementTempInMemoryStorage/fileOperations");
 
-jest.mock("../backend/implementTempInMemoryStorage/fileOperations");
+jest.mock("../implementTempInMemoryStorage/fileOperations");
 
 describe("deleteData", () => {
   afterEach(() => {

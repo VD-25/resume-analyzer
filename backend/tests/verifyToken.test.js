@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const verifyToken = require('../backend/helper/verifyToken.js');
+const verifyToken = require('../helper/verifyToken.js');
 
 const JWT_SECRET = process.env.JWT_SECRET; 
 

@@ -1,4 +1,4 @@
-const { extractTextFromPdf } = require("../backend/pdfExtractor");
+const { extractTextFromPdf } = require("../pdfExtractor");
 const fs = require('fs');
 const path = require('path');
 
