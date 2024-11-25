@@ -5,7 +5,7 @@ const jobDescriptionRoutes = require("./jobDescription")
 const resumeUploadRoutes = require("./resumeUpload");
 
 const app = express();
-app.use(cors());
+app.use(cors({origin: "*"}));
 app.use(express.json());
 
 // Mount job description routes under /api
