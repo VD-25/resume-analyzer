@@ -19,6 +19,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
         setPdfFile(null);
       } else {
         setPdfFile(file);
+        onUploadSuccess(true);
         setError('');
       }
     } else {
