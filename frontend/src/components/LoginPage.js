@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./styles.css"
+import Spinner from './Spinner';
 
 const LoginPage = ({onLoginSuccess}) => {
   // Define state for form fields
@@ -78,6 +79,7 @@ const LoginPage = ({onLoginSuccess}) => {
             required
           />
         </div>
+        {loading && <Spinner />}
         <button type="submit" className='submit-btn' disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
