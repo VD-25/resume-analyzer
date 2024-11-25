@@ -1,24 +1,10 @@
-const multer = require("multer");
-const { extractTextFromPdf } = require("./pdfExtractor");
 const express = require("express");
+const multer = require("multer");
+const upload = require("./helper/multerConfig");
+const { extractTextFromPdf } = require("./pdfExtractor");
 
 const router = express.Router();
 
-// Multer configuration for file uploads
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB file size limit
-  fileFilter: (req, file, cb) => {
-    const allowedMimeTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
-    if (allowedMimeTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error("Invalid file type. Only PDF or docx files are allowed."));
-    }
-  },
-});
-
-// Endpoint: Resume Upload
 router.post("/resume-upload", (req, res) => {
   upload.single("resume_file")(req, res, async (err) => {
     if (err) {
@@ -38,7 +24,6 @@ router.post("/resume-upload", (req, res) => {
           error: "No file uploaded.",
         });
       }
-
       if (file.mimetype === "application/pdf") {
         const extractedText = await extractTextFromPdf(file.buffer);
         return res.status(200).json({
@@ -46,8 +31,6 @@ router.post("/resume-upload", (req, res) => {
           textContent: extractedText,
         });
       }
-
-      // For docx: Validation complete but no processing
       return res.status(200).json({
         message: "Resume uploaded successfully (no text extraction for docx).",
       });

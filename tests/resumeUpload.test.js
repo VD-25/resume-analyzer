@@ -1,10 +1,10 @@
 const request = require("supertest");
 const express = require("express");
 const resumeUploadRoutes = require("../backend/resumeUpload");
-const fs = require("fs");
 const path = require("path");
 
 const app = express();
+//app.use("/api", resumeUploadRoutes);
 app.use("/api", resumeUploadRoutes);
 
 describe("Resume Upload API", () => {
@@ -19,14 +19,14 @@ describe("Resume Upload API", () => {
     expect(response.body.textContent).toBeDefined(); // PDF text content extracted
   });
 
-  it("should reject non-PDF and non-docx files", async () => {
+  it("should reject non-PDF files", async () => {
     const filePath = path.join(__dirname, "pdfFiles", "sample5_invalidFile.txt");
     const response = await request(app)
       .post("/api/resume-upload")
       .attach("resume_file", filePath);
 
     expect(response.status).toBe(400);
-    expect(response.body.error).toBe("Invalid file type. Only PDF or docx files are allowed.");
+    expect(response.body.error).toBe("Invalid file type. Only PDF files are allowed.");
   });
 
   it("should reject files larger than 2MB", async () => {
@@ -40,8 +40,7 @@ describe("Resume Upload API", () => {
   });
 
   it("should return an error when no file is uploaded", async () => {
-    const response = await request(app)
-      .post("/api/resume-upload");
+    const response = await request(app).post("/api/resume-upload");
 
     expect(response.status).toBe(400);
     expect(response.body.error).toBe("No file uploaded.");
