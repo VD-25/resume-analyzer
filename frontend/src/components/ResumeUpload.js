@@ -14,9 +14,13 @@ const ResumeUpload = ({onUploadSuccess}) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type === 'application/pdf') {
-      setPdfFile(file);
-      onUploadSuccess(true);
-      setError('');  // Clear error if file is valid
+      if (file.size > 2 * 1024 * 1024) { // Check file size in bytes
+        setError('File must be smaller than 2MB.');
+        setPdfFile(null);
+      } else {
+        setPdfFile(file);
+        setError('');
+      }
     } else {
       setError('Please upload a valid PDF file.');
       setPdfFile(null);
@@ -26,13 +30,11 @@ const ResumeUpload = ({onUploadSuccess}) => {
   // Handle text input change (and enforce word limit)
   const handleTextChange = (e) => {
     const inputText = e.target.value;
-    const wordCount = inputText.trim().split(/\s+/).length;
-
-    if (wordCount <= 500) {
+    if (inputText.length <= 5000) {
       setTextInput(inputText);
       setError('');
     } else {
-      setError('Text exceeds the 500-word limit.');
+      setError('Text exceeds the 5000-character limit.');
     }
   };
 
@@ -98,7 +100,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
         </div>
 
         <div className="input-group">
-          <label htmlFor="textInput">Text (Max 500 words):</label>
+          <label htmlFor="textInput">Text (Max 5000 characters):</label>
           <textarea
             id="textInput"
             className='textarea-field'
@@ -108,7 +110,7 @@ const ResumeUpload = ({onUploadSuccess}) => {
             placeholder="Enter text here"
           />
           <p className="word-count">
-            {textInput.trim().split(/\s+/).length} / 500 words
+            {textInput.trim().split(/\s+/).length} / 5000 characters
           </p>
         </div>
 
