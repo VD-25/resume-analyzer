@@ -1,0 +1,65 @@
+/* App.css */
+.navbar {
+  background-color: #209a22; /* Dark background color */
+  padding: 10px 0;
+}
+
+.navbar-list {
+  list-style: none; /* Remove default list styling */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Flexbox to align items horizontally */
+  justify-content: center; /* Center the items horizontally */
+}
+
+.navbar-item {
+  margin: 0 15px; /* Spacing between each nav item */
+}
+
+.navbar-link {
+  color: white; /* Text color */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 18px;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.navbar-link:hover {
+  background-color: #16c57f; /* Darken the background on hover */
+  border-radius: 4px; /* Slight rounding of the edges */
+}
+
+@media (max-width: 768px) {
+  .navbar-list {
+    flex-direction: column; /* Stack the items vertically on smaller screens */
+    text-align: center;
+  }
+
+  .navbar-item {
+    margin: 10px 0;
+  }
+}
+
+/* Global styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Centering content using flexbox */
+.centered {
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  height: 100vh; /* Full viewport height */
+  background-color: #f7f7f7; /* Optional, change background color */
+}
+
+.page-content {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
