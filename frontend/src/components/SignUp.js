@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./styles.css"
-
+import './styles.css';
 
 const SignUp = () => {
-  // Separate useState hooks for each input field
+  // State for form fields and submission status
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false); // Track submission state
 
   // Handlers for input changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
@@ -21,7 +20,11 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the form data object to send in the POST request
+    setLoading(true); // Start loading when form is submitted
+    setError('');
+    setSuccess('');
+
+    // Prepare the form data object
     const formData = { email, username, password };
 
     try {
@@ -32,46 +35,60 @@ const SignUp = () => {
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
       setSuccess('');
+    } finally {
+      setLoading(false); // Stop loading after submission is complete
     }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="form-container">
-      {success && <p style={{ color: 'green' }}>{success}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
         <div>
-        <h2>Sign Up</h2>
-          <label>Username</label>
+          <h2>Sign Up</h2>
+
+          <label htmlFor="Username">Username</label>
           <input
             type="text"
+            id="Username"
             className="input-field"
             value={username}
             onChange={handleUsernameChange}
           />
         </div>
+
         <div>
-          <label>Email</label>
+          <label htmlFor="Email">Email</label>
           <input
             type="email"
+            id="Email"
             className="input-field"
             value={email}
             onChange={handleEmailChange}
           />
         </div>
+
         <div>
-          <label>Password</label>
+          <label htmlFor="Password">Password</label>
           <input
             type="password"
+            id="Password"
             className="input-field"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit" className='submit-btn'>Sign Up</button>
-      </form>
 
-      
+        <button
+          type="submit"
+          className="submit-btn"
+          disabled={loading} // Disable button while submitting
+        >
+          {loading ? 'Submitting...' : 'Sign Up'}
+        </button>
+      </form>
     </div>
   );
 };
