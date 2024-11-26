@@ -1,18 +1,8 @@
 # Project Setup
 
-## Dependencies
-Before you start, ensure you have the following installed on your machine:
+## Installation and dependencies
 
-```bash
-cd backend
-npm install
-cd ../frontend
-npm install
-```
-
-## Installation
-
-- Clone the repo: `git clone https://github.com/your-username/your-repository.git`
+- Clone the repo: `git clone https://github.com/VD-25/resume-analyzer.git`
 - Install dependencies:
 ```bash
 cd backend
