@@ -10,20 +10,20 @@ describe('ResumeUpload Component', () => {
     mockAxios.reset(); // Reset the mock between tests
   });
 
-  test('renders file input and text input correctly', () => {
+  test('File and Text Input successful', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
     // Check if the file input and text input are rendered
-    expect(screen.getByLabelText(/Upload PDF File:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Choose a PDF/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Text \(Max 5000 characters\):/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Upload/i })).toBeInTheDocument();
   });
 
-  test('shows error if file is not a PDF', () => {
+  test('Error if input file is not PDF', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
     // Simulate file input with a non-PDF file
-    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    const fileInput = screen.getByLabelText(/Choose a PDF/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'test.txt', { type: 'text/plain' })] },
     });
@@ -31,20 +31,20 @@ describe('ResumeUpload Component', () => {
     expect(screen.getByText(/Please upload a valid PDF file./i)).toBeInTheDocument();
   });
 
-  test('shows error if file is larger than 2MB', async () => {
+  test('Error if file larger than 2MB', async () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
-  
+
     // Simulate selecting a large file (3MB)
-    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    const fileInput = screen.getByLabelText(/Choose a PDF/i);
     const largeFile = new File(['a'.repeat(3 * 1024 * 1024)], 'large.pdf', { type: 'application/pdf' });
     fireEvent.change(fileInput, { target: { files: [largeFile] } });
-  
+
     await waitFor(() => {
       expect(screen.getByText(/File must be smaller than 2MB./i)).toBeInTheDocument();
     });
   });
-  
-  test('enforces 5000-character limit on text input', () => {
+
+  test('5000-character limit on text input', () => {
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
     const textInput = screen.getByLabelText(/Text \(Max 5000 characters\):/i);
@@ -56,33 +56,39 @@ describe('ResumeUpload Component', () => {
   });
 
   test('disables the submit button while submitting', async () => {
-    mockAxios.onPost('http://localhost:3000/api/upload').reply(200, { message: 'Success' });
-    render(<ResumeUpload onUploadSuccess={jest.fn()} />);
+    // Mock both endpoints to return success
+    mockAxios.onPost('http://localhost:3000/api/resume-upload').reply(200, { message: 'Resume uploaded successfully' });
+    mockAxios.onPost('http://localhost:3000/api/job-description').reply(200, { message: 'Job description uploaded successfully' });
 
-    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    render(<ResumeUpload onUploadSuccess={jest.fn()} />);
+    
+    const fileInput = screen.getByLabelText(/Choose a PDF/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
-
+    
     const textInput = screen.getByLabelText(/Text \(Max 5000 characters\):/i);
     fireEvent.change(textInput, { target: { value: 'Valid text input' } });
-
+    
     const submitButton = screen.getByRole('button', { name: /Upload/i });
 
     // Submit the form and check if the submit button is disabled
     fireEvent.click(submitButton);
     expect(submitButton).toBeDisabled();
 
-    // Wait for the success message and check if the button is enabled again
-    await waitFor(() => expect(screen.getByText(/File and text uploaded successfully/)).toBeInTheDocument());
-    expect(submitButton).toBeEnabled();
+    // Wait for both success messages and check if the button is enabled again
+    await waitFor(() => {
+      expect(screen.getByText(/Text uploaded successfully:/)).toBeInTheDocument();
+      expect(screen.getByText(/Text uploaded successfully:/)).toBeInTheDocument();
+      expect(submitButton).toBeEnabled();
+    });
   });
 
   test('shows error message on failed upload', async () => {
-    mockAxios.onPost('http://localhost:3000/api/upload').reply(500, { message: 'Internal Server Error' });
+    mockAxios.onPost('http://localhost:3000/api/resume-upload').reply(500, { message: 'Internal Server Error' });
     render(<ResumeUpload onUploadSuccess={jest.fn()} />);
 
-    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    const fileInput = screen.getByLabelText(/Choose a PDF/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
@@ -94,25 +100,37 @@ describe('ResumeUpload Component', () => {
     fireEvent.click(submitButton);
 
     // Check that the error message is displayed
-    await waitFor(() => expect(screen.getByText(/There was an error uploading your file and text. Please try again./)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/There was an error uploading your text. Please try again./)).toBeInTheDocument());
   });
 
   test('shows success message on successful upload', async () => {
-    mockAxios.onPost('http://localhost:3000/api/upload').reply(200, { message: 'Success' });
-    render(<ResumeUpload onUploadSuccess={jest.fn()} />);
-
-    const fileInput = screen.getByLabelText(/Upload PDF File:/i);
+    // Mock API response
+    mockAxios.onPost('http://localhost:3000/api/resume-upload').reply(200, { message: 'Success' });
+    
+    // Create a mock function for onUploadSuccess
+    const onUploadSuccess = jest.fn();
+    
+    // Render the component
+    render(<ResumeUpload onUploadSuccess={onUploadSuccess} />);
+    
+    // Find the file input and simulate a file change
+    const fileInput = screen.getByLabelText(/Choose a PDF/i);
     fireEvent.change(fileInput, {
       target: { files: [new File(['dummy content'], 'valid.pdf', { type: 'application/pdf' })] },
     });
-
+  
+    // Find the text input and simulate typing text
     const textInput = screen.getByLabelText(/Text \(Max 5000 characters\):/i);
     fireEvent.change(textInput, { target: { value: 'Valid text input' } });
-
+  
+    // Find and click the submit button
     const submitButton = screen.getByRole('button', { name: /Upload/i });
     fireEvent.click(submitButton);
-
-    // Check that the success message is displayed
-    await waitFor(() => expect(screen.getByText(/File and text uploaded successfully/)).toBeInTheDocument());
+  
+    // Wait for the success message to appear
+    await waitFor(() => expect(screen.getByText(/File uploaded successfully:/)).toBeInTheDocument());
+  
+    // Ensure that the onUploadSuccess callback was called
+    expect(onUploadSuccess).toHaveBeenCalledTimes(1);
   });
 });

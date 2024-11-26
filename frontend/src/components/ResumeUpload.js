@@ -1,41 +1,42 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './styles.css';
+import "./styles.css"
+import Spinner from './Spinner';
 
-const ResumeUpload = ({ onUploadSuccess }) => {
+const ResumeUpload = ({onUploadSuccess}) => {
+  // State for the file and text input
   const [pdfFile, setPdfFile] = useState(null);
   const [textInput, setTextInput] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [textError, setTextError] = useState('');
 
   // Handle file input change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      if (file.type !== 'application/pdf') {
-        setError('Please upload a valid PDF file.');
-        setPdfFile(null);
-      } else if (file.size > 2 * 1024 * 1024) { // 2MB file size limit
+    if (file && file.type === 'application/pdf') {
+      if (file.size > 2 * 1024 * 1024) { // Check file size in bytes
         setError('File must be smaller than 2MB.');
         setPdfFile(null);
       } else {
         setPdfFile(file);
+        onUploadSuccess(true);
         setError('');
       }
     } else {
-      setError('No file selected.');
+      setError('Please upload a valid PDF file.');
+      setPdfFile(null);
     }
   };
 
-  // Handle text input change
+  // Handle text input change (and enforce word limit)
   const handleTextChange = (e) => {
     const inputText = e.target.value;
-    setTextInput(inputText);
-    setTextError('');
-    if (inputText.length > 5000) {
-      setTextError('Text exceeds the 5000-character limit.');
+    if (inputText.length <= 5000) {
+      setTextInput(inputText);
+      setError('');
+    } else {
+      setError('Text exceeds the 5000-character limit.');
     }
   };
 
@@ -43,66 +44,77 @@ const ResumeUpload = ({ onUploadSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let hasError = false;
-
     if (!pdfFile) {
       setError('Please upload a PDF file.');
-      hasError = true;
-    } else {
-      setError('');
+      return;
     }
 
     if (!textInput.trim()) {
-      setTextError('Text input cannot be empty.');
-      hasError = true;
-    } else if (textInput.length > 5000) {
-      setTextError('Text exceeds the 5000-character limit.');
-      hasError = true;
-    } else {
-      setTextError('');
+      setError('Text input cannot be empty.');
+      return;
     }
-
-    if (hasError) return;
 
     setLoading(true);
     setSuccessMessage('');
     setError('');
 
-    const formData = new FormData();
-    formData.append('pdfFile', pdfFile);
-    formData.append('textInput', textInput);
+    // FormData to send file and text as POST request
+    const formDataResume = new FormData();
+    formDataResume.append('resume_file', pdfFile);
+    const jobDescriptionData = { job_description: textInput };
 
     try {
-      const response = await axios.post('http://localhost:3000/api/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      // Send the data to your backend API (replace URL with your backend endpoint)
+      const response = await axios.post('http://localhost:3000/api/resume-upload', formDataResume, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      setSuccessMessage('File and text uploaded successfully.');
-      setPdfFile(null);
-      setTextInput('');
-      if (onUploadSuccess) onUploadSuccess(response.data);
-    } catch (err) {
-      setError('There was an error uploading your file and text. Please try again.');
-      console.error('Upload error:', err);
+      setSuccessMessage('File uploaded successfully:',response.data);
+      setPdfFile(null);  // Clear file input after successful upload
+        // Clear text input after successful upload
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setError('There was an error uploading your file. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+
+    try {
+      // Send the data to your backend API (replace URL with your backend endpoint)
+      const response = await axios.post('http://localhost:3000/api/job-description', jobDescriptionData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setSuccessMessage('Text uploaded successfully:',response.data);
+    // Clear file input after successful upload
+      setTextInput('');  // Clear text input after successful upload
+    } catch (error) {
+      console.error('Error uploading text:', error);
+      setError('There was an error uploading your text. Please try again.');
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
-
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
 
+
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="pdfFile">Upload PDF File:</label>
+
+          <label htmlFor="pdfFile">Choose a PDF</label>
           <input
             type="file"
             id="pdfFile"
-            className="input-field"
+            className='input-field'
             accept="application/pdf"
             onChange={handleFileChange}
           />
@@ -112,20 +124,19 @@ const ResumeUpload = ({ onUploadSuccess }) => {
           <label htmlFor="textInput">Text (Max 5000 characters):</label>
           <textarea
             id="textInput"
-            className="textarea-field"
+            className='textarea-field'
             value={textInput}
             onChange={handleTextChange}
             rows="6"
             placeholder="Enter text here"
           />
           <p className="word-count">
-            {textInput.trim().length} / 5000 characters
+            {textInput.length} / 5000 characters
           </p>
-          {textError && <p className="error-message">{textError}</p>}
         </div>
-
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? 'Currently uploading' : 'Upload'}
+        {loading && <Spinner />}
+        <button type="submit" className='submit-btn' disabled={loading}>
+          {loading ? 'Uploading...' : 'Upload'}
         </button>
       </form>
     </div>
