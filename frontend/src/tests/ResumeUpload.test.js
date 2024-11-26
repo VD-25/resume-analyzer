@@ -103,7 +103,7 @@ describe('ResumeUpload Component', () => {
     await waitFor(() => expect(screen.getByText(/There was an error uploading your text. Please try again./)).toBeInTheDocument());
   });
 
-  test('shows success message on successful upload', async () => {
+  test('Success message on Successful Upload', async () => {
     // Mock API response
     mockAxios.onPost('http://localhost:3000/api/resume-upload').reply(200, { message: 'Success' });
     
