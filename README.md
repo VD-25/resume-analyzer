@@ -24,7 +24,7 @@ This app would enable students to upload their resumes and receive AI-driven fee
 
 
 ## Steps to set up project locally:
-1. git clone "repo url"
+1. git clone https://github.com/VD-25/resume-analyzer.git
 2. Create issue on github with task template
 3. Create a new branch on that issue
 4. Checkout locally, copy paste code into local git terminal
