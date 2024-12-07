@@ -4,6 +4,7 @@ const express = require('express');
 const { getResumeAndJobDescriptionFromJSON } = require('./helper/getResumeAndJobDescription');
 const { matchResumeToJob } = require('./helper/matchResumeToJob');
 const { parseApiResponse } = require('./parseApiResponse');
+const compareResumeRouter = require('./compareResumeRouter');
 
 const router = express.Router();
 
@@ -22,5 +23,7 @@ router.post('/analyze-application', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+router.use(compareResumeRouter);
 
 module.exports = router;
