@@ -11,8 +11,12 @@ jest.mock('@google-cloud/language', () => {
 const { LanguageServiceClient, __mockAnalyzeEntities } = require('@google-cloud/language');
 const { matchResumeToJob } = require('../helper/matchResumeToJob');
 const { getResumeAndJobDescriptionFromJSON } = require('../helper/getResumeAndJobDescription');
+const generateOutput = require('../helper/generateOutput');
+const generateErrorResponse = require('../helper/generateErrorResponse');
 
 jest.mock('../helper/getResumeAndJobDescription');
+jest.mock('../helper/generateOutput', () => jest.fn());
+jest.mock('../helper/generateErrorResponse', () => jest.fn());
 
 describe('matchResumeToJob', () => {
     beforeEach(() => {
@@ -28,14 +32,26 @@ describe('matchResumeToJob', () => {
                 ],
             },
         ]);
-
+    
         getResumeAndJobDescriptionFromJSON.mockResolvedValue({
             resume: 'Sample resume',
             jobDescription: 'Sample job description',
         });
-
+    
+        generateOutput.mockReturnValue({
+            fit_score: 140,
+            feedback: [
+                "Add more details about your work with 'Google'.",
+                "Expand on your role as 'Software Engineer'.",
+            ],
+        });
+    
         const result = await matchResumeToJob('mockPath.json', 'application1', getResumeAndJobDescriptionFromJSON);
-
+    
+        expect(generateOutput).toHaveBeenCalledWith(140, [
+            "Add more details about your work with 'Google'.",
+            "Expand on your role as 'Software Engineer'.",
+        ]);
         expect(result).toEqual({
             fit_score: 140,
             feedback: [
@@ -44,38 +60,52 @@ describe('matchResumeToJob', () => {
             ],
         });
     });
-    
+
     test('should return a fit score of 0 and feedback if no entities are found', async () => {
-        // Set up mock response for analyzeEntities
         __mockAnalyzeEntities.mockResolvedValueOnce([
             {
                 entities: [], // No entities
             },
         ]);
-
+    
         getResumeAndJobDescriptionFromJSON.mockResolvedValue({
             resume: 'Sample resume',
             jobDescription: 'Sample job description',
         });
-
+    
+        generateOutput.mockReturnValue({
+            fit_score: 0,
+            feedback: ["No relevant entities found in the text."],
+        });
+    
         const result = await matchResumeToJob('mockPath.json', 'application1', getResumeAndJobDescriptionFromJSON);
-
+    
+        expect(generateOutput).toHaveBeenCalledWith(0, ["No relevant entities found in the text."]);
         expect(result).toEqual({
             fit_score: 0,
             feedback: ["No relevant entities found in the text."],
         });
     });
-
-    test('should throw an error if the NLP API call fails', async () => {
+    
+    test('should return a standardized error response if the NLP API call fails', async () => {
         __mockAnalyzeEntities.mockRejectedValueOnce(new Error('NLP API error'));
-
+    
         getResumeAndJobDescriptionFromJSON.mockResolvedValue({
             resume: 'Sample resume',
             jobDescription: 'Sample job description',
         });
-
-        await expect(
-            matchResumeToJob('mockPath.json', 'application1', getResumeAndJobDescriptionFromJSON)
-        ).rejects.toThrow('Error calling Google Natural Language API: NLP API error');
+    
+        generateErrorResponse.mockReturnValue({
+            error: "Failed to process data or call the NLP API.",
+        });
+    
+        const result = await matchResumeToJob('mockPath.json', 'application1', getResumeAndJobDescriptionFromJSON)
+            .catch(err => err);
+    
+        expect(generateErrorResponse).toHaveBeenCalledWith("Failed to process data or call the NLP API.");
+        expect(result).toEqual({
+            error: "Failed to process data or call the NLP API.",
+        });
     });
+    
 });
