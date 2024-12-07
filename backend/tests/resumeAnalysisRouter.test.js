@@ -16,8 +16,13 @@ describe('POST /api/analyze-application', () => {
 
     test('should return 200 and the result from matchResumeToJob', async () => {
         matchResumeToJob.mockResolvedValue({
-            fit_score: 85,
-            feedback: ['Add more relevant skills.', 'Improve the summary section.'],
+            results: [
+                {
+                    fit_score: 0.85,
+                    keywords: ['project management', 'team leadership'],
+                    feedback: ['Add more relevant skills.', 'Improve the summary section.'],
+                },
+            ],
         });
 
         const response = await request(app)
