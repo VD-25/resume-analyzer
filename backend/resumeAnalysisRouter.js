@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const { getResumeAndJobDescriptionFromJSON } = require('./helper/getResumeAndJobDescription');
 const { matchResumeToJob } = require('./helper/matchResumeToJob');
+const { parseApiResponse } = require('./parseApiResponse');
 
 const router = express.Router();
 
@@ -15,7 +16,8 @@ router.post('/analyze-application', async (req, res) => {
         }
 
         const result = await matchResumeToJob(jsonPath, key, getResumeAndJobDescriptionFromJSON);
-        res.json(result);
+        const parsedResponse = parseApiResponse(result);
+        res.json(parsedResponse);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
