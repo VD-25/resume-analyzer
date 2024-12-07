@@ -3,6 +3,7 @@ const express = require("express");
 const userSignUp = require("./userSignUp");
 const jobDescriptionRoutes = require("./jobDescription")
 const resumeUploadRoutes = require("./resumeUpload");
+const analysis = require("./resumeAnalysisRouter");
 
 const app = express();
 app.use(cors({origin: "*"}));
@@ -12,6 +13,8 @@ app.use(express.json());
 app.use("/api", userSignUp);
 app.use("/api", jobDescriptionRoutes);
 app.use("/api", resumeUploadRoutes);
+app.use("/api", analysis);
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
