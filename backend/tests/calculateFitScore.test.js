@@ -1,4 +1,4 @@
-const { calculateFitScore } = require('../helper/compareResumeToJob');
+const { calculateFitScore } = require('../helper/calculateFitScore');
 
 describe('calculateFitScore', () => {
     test('should calculate fit score correctly for matching keywords', () => {
