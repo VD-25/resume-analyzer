@@ -1,5 +1,5 @@
 const express = require('express');
-const { calculateFitScore } = require('./helper/compareResumeToJob');
+const { calculateFitScore } = require('./helper/calculateFitScore');
 
 const router = express.Router();
 
