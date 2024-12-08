@@ -5,7 +5,8 @@ const jobDescriptionRoutes = require("./jobDescription")
 const resumeUploadRoutes = require("./resumeUpload");
 const analysis = require("./resumeAnalysisRouter");
 const resumeAnalysisRouter = require('./resumeAnalysisRouter');
-const feedbackRoutes = require('./feedbackRoutes');
+const feedbackRoutes = require('./generateFeedbackRouter');
+const fitScoreRoutes = require('./fitScoreRoutes');
 
 const app = express();
 app.use(cors({origin: "*"}));
@@ -18,6 +19,7 @@ app.use("/api", resumeUploadRoutes);
 app.use("/api", analysis);
 app.use('/api', resumeAnalysisRouter);
 app.use('/api', feedbackRoutes);
+app.use('/api', fitScoreRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
