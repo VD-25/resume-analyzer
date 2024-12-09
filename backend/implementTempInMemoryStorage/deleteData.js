@@ -6,9 +6,6 @@ function deleteData(sessionId) {
 
         if (tempStorage[sessionId]) {
             const dataToProcess = tempStorage[sessionId];
-
-            console.log('Processing data:', dataToProcess);
-
             delete tempStorage[sessionId];
             writeStorageFile(tempStorage);
 

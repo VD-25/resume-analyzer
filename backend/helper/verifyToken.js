@@ -11,7 +11,7 @@ function verifyToken(token) {
         const decoded = jwt.verify(token, JWT_SECRET);
         return decoded;
     } catch (err) {
-        return null; // Invalid token
+        return null;
     }
 }
 

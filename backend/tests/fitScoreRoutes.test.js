@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const fitScoreRoutes = require('../fitScoreRoutes');
+const fitScoreRoutes = require('../routes/fitScoreRoutes');
 const { calculateFitScore } = require('../helper/calculateFitScore');
 const { generateFeedback } = require('../helper/generateFeedback');
 

@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('../resumeAnalysisRouter');
+const router = require('../routes/resumeAnalysisRoutes');
 const { matchResumeToJob } = require('../helper/matchResumeToJob');
 
 jest.mock('../helper/matchResumeToJob');
