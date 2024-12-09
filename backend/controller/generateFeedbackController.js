@@ -1,9 +1,6 @@
-const express = require('express');
-const { generateFeedback } = require('./helper/generateFeedback');
+const { generateFeedback } = require('../helper/generateFeedback');
 
-const router = express.Router();
-
-router.post('/generate-feedback', (req, res) => {
+const generateFeedbackHandler = (req, res) => {
     const { resume_text, job_description } = req.body;
 
     if (!resume_text || !job_description) {
@@ -16,6 +13,6 @@ router.post('/generate-feedback', (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
+};
 
-module.exports = router;
+module.exports = { generateFeedbackHandler };

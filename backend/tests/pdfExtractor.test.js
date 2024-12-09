@@ -1,4 +1,4 @@
-const { extractTextFromPdf } = require("../pdfExtractor");
+const { extractTextFromPdf } = require("../helper/pdfExtractor");
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +14,7 @@ describe("extractTextFromPdf", () => {
 
     expect(typeof extractedText).toBe("string");
     expect(extractedText.length).toBeGreaterThan(0);
-    expect(extractedText).not.toMatch(/\s{2,}/); // Ensure no excessive whitespace
+    expect(extractedText).not.toMatch(/\s{2,}/);
   });
 
   it("should handle PDFs with breaklines and return text content", async () => {
@@ -24,8 +24,8 @@ describe("extractTextFromPdf", () => {
     expect(typeof extractedText).toBe("string");
     expect(extractedText.length).toBeGreaterThan(0);
     expect(extractedText).not.toMatch(/\s{2,}/);
-    expect(extractedText).not.toMatch(/\n/); // Ensure no newlines are left
-    expect(extractedText).toMatch(/\S+/); // Ensure the text contains content
+    expect(extractedText).not.toMatch(/\n/); 
+    expect(extractedText).toMatch(/\S+/);
   });
 
   it("should return an empty string for an empty PDF file", async () => {

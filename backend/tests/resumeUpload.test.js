@@ -1,6 +1,6 @@
 const request = require("supertest");
 const express = require("express");
-const resumeUploadRoutes = require("../resumeUpload");
+const resumeUploadRoutes = require("../routes/resumeUploadRoutes");
 const path = require("path");
 
 const app = express();

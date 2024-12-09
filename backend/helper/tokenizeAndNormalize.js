@@ -1,4 +1,4 @@
-const { STOP_WORDS } = require('./stopWords');
+const { STOP_WORDS } = require('../config/stopWords');
 
 const tokenizeAndNormalize = (text) =>
     text

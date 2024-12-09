@@ -1,9 +1,6 @@
-const express = require('express');
-const { calculateFitScore } = require('./helper/calculateFitScore');
+const { calculateFitScore } = require('../helper/calculateFitScore');
 
-const router = express.Router();
-
-router.post('/compare-resume', (req, res) => {
+const compareResumeHandler = (req, res) => {
     try {
         const { resume_text, job_description } = req.body;
 
@@ -22,6 +19,6 @@ router.post('/compare-resume', (req, res) => {
         console.error('Error in compare-resume route:', error.message);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});
+};
 
-module.exports = router;
+module.exports = { compareResumeHandler };

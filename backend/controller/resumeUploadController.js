@@ -1,11 +1,8 @@
-const express = require("express");
 const multer = require("multer");
-const upload = require("./helper/multerConfig");
-const { extractTextFromPdf } = require("./pdfExtractor");
+const upload = require("../config/multerConfig");
+const { extractTextFromPdf } = require("../helper/pdfExtractor");
 
-const router = express.Router();
-
-router.post("/resume-upload", (req, res) => {
+const resumeUploadHandler = (req, res) => {
   upload.single("resume_file")(req, res, async (err) => {
     if (err) {
       if (err instanceof multer.MulterError) {
@@ -16,6 +13,7 @@ router.post("/resume-upload", (req, res) => {
         return res.status(400).json({ error: err.message });
       }
     }
+
     try {
       const file = req.file;
 
@@ -24,6 +22,7 @@ router.post("/resume-upload", (req, res) => {
           error: "No file uploaded.",
         });
       }
+
       if (file.mimetype === "application/pdf") {
         const extractedText = await extractTextFromPdf(file.buffer);
         return res.status(200).json({
@@ -31,13 +30,16 @@ router.post("/resume-upload", (req, res) => {
           textContent: extractedText,
         });
       }
+
       return res.status(200).json({
         message: "Resume uploaded successfully (no text extraction for docx).",
       });
     } catch (error) {
-      return res.status(500).json({ error: "An error occurred while processing your request." });
+      return res
+        .status(500)
+        .json({ error: "An error occurred while processing your request." });
     }
   });
-});
+};
 
-module.exports = router;
+module.exports = { resumeUploadHandler };

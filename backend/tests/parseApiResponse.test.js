@@ -1,4 +1,4 @@
-const { parseApiResponse } = require('../parseApiResponse');
+const { parseApiResponse } = require('../helper/parseApiResponse');
 
 describe('parseApiResponse', () => {
     test('should parse a valid response correctly', () => {
