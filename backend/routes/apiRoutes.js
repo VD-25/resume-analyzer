@@ -8,11 +8,11 @@ const fitScoreRoutes = require('./fitScoreRoutes');
 
 const router = express.Router();
 
-router.use("/user-signup", userSignUp);
-router.use("/job-description", jobDescriptionRoutes);
-router.use("/resume-upload", resumeUploadRoutes);
-router.use("/resume-analysis", resumeAnalysisRouter);
-router.use("/feedback", feedbackRoutes);
-router.use("/fit-score", fitScoreRoutes);
+router.use("", userSignUp);
+router.use("", jobDescriptionRoutes);
+router.use("", resumeUploadRoutes);
+router.use("", resumeAnalysisRouter);
+router.use("", feedbackRoutes);
+router.use("", fitScoreRoutes);
 
 module.exports = router;
