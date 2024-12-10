@@ -1,7 +1,7 @@
 /* App.css */
 .navbar {
-  background-color: #209a22; /* Dark background color */
-  padding: 10px 0;
+  background: linear-gradient(to right, red, orange, green, blue, indigo, violet);
+  padding: 15px 0;
 }
 
 .navbar-list {
@@ -45,7 +45,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Century Gothic', 'Segoe UI', 'Roboto', sans-serif;
 }
 
 /* Centering content using flexbox */
@@ -62,4 +62,13 @@ body, html {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+h3 {
+  margin-top: 20px;
 }
