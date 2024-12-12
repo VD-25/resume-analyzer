@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import "./styles.css"
-import Spinner from './Spinner';
+import { uploadResume } from '../../api/resume'; // Import the API function for resume upload
+import { submitJobDescription } from '../../api/jobDescription'; // Import the API function for job description
+import "../../styles/styles.css";
+import Spinner from '../shared/Spinner';
+import { getToken } from '../../utils/token';
+import { storeData } from '../../api/storeData';
 
-const ResumeUpload = ({onUploadSuccess}) => {
+const ResumeUpload = () => {
   // State for the file and text input
   const [pdfFile, setPdfFile] = useState(null);
   const [textInput, setTextInput] = useState('');
@@ -20,7 +23,6 @@ const ResumeUpload = ({onUploadSuccess}) => {
         setPdfFile(null);
       } else {
         setPdfFile(file);
-        onUploadSuccess(true);
         setError('');
       }
     } else {
@@ -58,63 +60,59 @@ const ResumeUpload = ({onUploadSuccess}) => {
     setSuccessMessage('');
     setError('');
 
-    // FormData to send file and text as POST request
-    const formDataResume = new FormData();
-    formDataResume.append('resume_file', pdfFile);
-    const jobDescriptionData = { job_description: textInput };
-
     try {
-      // Send the data to your backend API (replace URL with your backend endpoint)
-      const response = await axios.post('http://localhost:3000/api/resume-upload', formDataResume, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      //const token = getToken(); // Get the saved token from localStorage
+      const sessionId = getToken();
+      if (!sessionId) {
+        throw new Error('User is not authenticated. Please log in.');
+      }
+  
+      // Upload PDF file
+      const resumeResponse = await uploadResume(pdfFile, sessionId);
+      console.log('Resume uploaded successfully:', resumeResponse);
+  
+      // Submit job description
+      const jobDescriptionResponse = await submitJobDescription(textInput, sessionId);
+      console.log('Job description submitted successfully:', jobDescriptionResponse);
+
+      // Store data in the backend
+     console.log('Payload to storeData:', {
+      sessionId,
+        extractTextFromPdf: resumeResponse.textContent,
+        jobDescription: jobDescriptionResponse.cleanedText,
       });
+    const storeResponse = await storeData({
+      sessionId,
+      extractTextFromPdf: resumeResponse.textContent, // Replace with the actual response field
+      jobDescription: jobDescriptionResponse.cleanedText, // Replace with the actual response field
+    });
+    console.log('Data stored successfully in the backend:', storeResponse);
 
-      setSuccessMessage('File uploaded successfully:',response.data);
-      setPdfFile(null);  // Clear file input after successful upload
-        // Clear text input after successful upload
+      // Success message and input reset
+      setSuccessMessage('Resume and job description submitted successfully.');
+      setPdfFile(null);
+      setTextInput('');
     } catch (error) {
-      console.error('Error uploading file:', error);
-      setError('There was an error uploading your file. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-
-    try {
-      // Send the data to your backend API (replace URL with your backend endpoint)
-      const response = await axios.post('http://localhost:3000/api/job-description', jobDescriptionData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setSuccessMessage('Text uploaded successfully:',response.data);
-    // Clear file input after successful upload
-      setTextInput('');  // Clear text input after successful upload
-    } catch (error) {
-      console.error('Error uploading text:', error);
-      setError('There was an error uploading your text. Please try again.');
+      console.error('Error during upload:', error);
+      setError(error.message || 'There was an error uploading your file and text. Please try again.');
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="form-container">
       <h2>Upload PDF and Text</h2>
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
 
-
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-
           <label htmlFor="pdfFile">Choose a PDF</label>
           <input
             type="file"
             id="pdfFile"
-            className='input-field'
+            className="input-field"
             accept="application/pdf"
             onChange={handleFileChange}
           />
@@ -124,18 +122,17 @@ const ResumeUpload = ({onUploadSuccess}) => {
           <label htmlFor="textInput">Text (Max 5000 characters):</label>
           <textarea
             id="textInput"
-            className='textarea-field'
+            className="textarea-field"
             value={textInput}
             onChange={handleTextChange}
             rows="6"
             placeholder="Enter text here"
           />
-          <p className="word-count">
-            {textInput.length} / 5000 characters
-          </p>
+          <p className="word-count">{textInput.length} / 5000 characters</p>
         </div>
+
         {loading && <Spinner />}
-        <button type="submit" className='submit-btn' disabled={loading}>
+        <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? 'Uploading...' : 'Upload'}
         </button>
       </form>

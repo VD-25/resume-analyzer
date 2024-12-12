@@ -72,3 +72,15 @@ body, html {
 h3 {
   margin-top: 20px;
 }
+
+.success-message {
+  color: green;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 10px;
+}

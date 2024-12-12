@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import "./styles.css"
-import Spinner from './Spinner';
+import "../../styles/styles.css";
+import Spinner from '../shared/Spinner';
+import { login } from '../../api/auth'; // Import the reusable API function for login
+import { saveToken } from '../../utils/token';
 
-const LoginPage = ({onLoginSuccess}) => {
+const LoginPage = ({ onLoginSuccess }) => {
   // Define state for form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,45 +16,42 @@ const LoginPage = ({onLoginSuccess}) => {
     e.preventDefault();
 
     // Basic validation
-    if (!email || !password) {
+    if (!email.trim() || !password.trim()) {
       setError('Please enter both email and password.');
       return;
     }
 
-    // Prepare login data
-    const loginData = {
-      email,
-      password,
-    };
-
     setLoading(true);
+    setError('');
 
     try {
-      // Send login data to backend
-      const response = await axios.post('http://localhost:3000/api/login', loginData);
-      
-      // Handle success (e.g., store token or redirect)
+      // Call the login API function
+      const { token } = await login(email, password);
+  
+      // Decode the token to extract the expiry time
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiryTime = payload.exp * 1000; // Convert to milliseconds
+  
+      // Save the token and expiry time using the utility
+      saveToken(token, expiryTime);
+  
+      // Notify parent component about successful login
       onLoginSuccess(true);
-      console.log('Login successful:', response.data);
-      // alert('Login successful:', response.data);
-
-      // Reset form and error state on success
+  
+      // Clear form fields
       setEmail('');
       setPassword('');
-      setError('Success!');
-      // Redirect or store token logic here
+      setError('');
     } catch (err) {
-      // Handle error (e.g., wrong credentials)
-      console.error('Login error:', err.response ? err.response.data : err.message);
-      setError('Invalid email or password.');
+      console.error('Login error:', err);
+      setError(err || 'Invalid email or password.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div class="center" className="login-container">
-      
+    <div className="login-container">
       <form onSubmit={handleSubmit} className="form-container">
         {error && <p className="error-message">{error}</p>}
         <h2>Login</h2>
@@ -65,6 +63,7 @@ const LoginPage = ({onLoginSuccess}) => {
             className="input-field"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
             required
           />
         </div>
@@ -76,11 +75,12 @@ const LoginPage = ({onLoginSuccess}) => {
             className="input-field"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
             required
           />
         </div>
         {loading && <Spinner />}
-        <button type="submit" className='submit-btn' disabled={loading}>
+        <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

@@ -76,12 +76,36 @@ router.post('/login', loginHandler);
  *   get:
  *     summary: Access a protected route
  *     tags: [User Authentication]
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         description: Bearer token for authentication
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Access granted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Welcome, user@example.com
  *       401:
  *         description: Invalid or expired token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Invalid or expired token
  */
 router.get('/protected', protectedHandler);
+
 
 module.exports = router;
