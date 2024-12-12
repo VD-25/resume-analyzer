@@ -28,13 +28,12 @@ const Dashboard = () => {
   return (
     <div style={styles.dashboard}>
       <header style={styles.header}>
-        <h1>Professional Dashboard</h1>
-        <p>Your tools for crafting the perfect resume and applying for jobs.</p>
+        <h1>Good evening, here is your personalized Resume Analysis Dashboard 😁</h1>
       </header>
 
       <div style={styles.content}>
         <section style={styles.widget}>
-          <h2 style={styles.widgetHeader}>Job Description Matching</h2>
+          <h2 style={styles.widgetHeader}>Job Description Matching </h2>
           <p>Paste a job description below to tailor your resume accordingly.</p>
           <textarea
             style={styles.textarea}

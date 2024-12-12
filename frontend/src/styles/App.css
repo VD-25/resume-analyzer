@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400&display=swap');
+
 /* App.css */
 .navbar {
   background: linear-gradient(to right, red, orange, green, blue, indigo, violet);
@@ -25,8 +27,8 @@
 }
 
 .navbar-link:hover {
-  background-color: #16c57f; /* Darken the background on hover */
-  border-radius: 4px; /* Slight rounding of the edges */
+  background-color: #000000; /* Darken the background on hover */
+  border-radius: 10px; /* Slight rounding of the edges */
 }
 
 @media (max-width: 768px) {
@@ -40,12 +42,11 @@
   }
 }
 
-/* Global styles */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Century Gothic', 'Segoe UI', 'Roboto', sans-serif;
+  font-family: 'Google Sans', sans-serif;
 }
 
 /* Centering content using flexbox */
