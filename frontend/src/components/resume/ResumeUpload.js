@@ -119,7 +119,7 @@ const ResumeUpload = () => {
             value={textInput}
             onChange={handleTextChange}
             rows="6"
-            placeholder="Enter text here"
+            placeholder="Paste the job description here..."
           />
           <p className="word-count">{textInput.length} / 10000 characters</p>
         </div>

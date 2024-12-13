@@ -28,12 +28,12 @@ const Dashboard = () => {
   return (
     <div style={styles.dashboard}>
       <header style={styles.header}>
-        <h1>Good evening, here is your personalized Resume Analysis Dashboard 😁</h1>
+        <h2>Your Personalized Resume Analysis Dashboard 😁</h2>
       </header>
 
       <div style={styles.content}>
         <section style={styles.widget}>
-          <h2 style={styles.widgetHeader}>Job Description Matching </h2>
+          <h3 style={styles.widgetHeader}>Job Description Matching </h3>
           <p>Paste a job description below to tailor your resume accordingly.</p>
           <textarea
             style={styles.textarea}
@@ -62,18 +62,19 @@ const Dashboard = () => {
           )}
         </section>
         <section style={styles.widget}>
-          <h2 style={styles.widgetHeader}>Fit Score Analysis</h2>
-          <FitScore />
+          <h3 style={styles.widgetHeader}>Fit Score Analysis</h3>
+          <FitScore loading={loading} />
         </section>
 
         <section style={styles.widget}>
-          <h2 style={styles.widgetHeader}>Matched Skills</h2>
-          <MatchedSkills />
+          <h3 style={styles.widgetHeader}>Matched Skills</h3>
+          <MatchedSkills loading={loading}/>
         </section>
+        
 
         <section style={styles.widget}>
-          <h2 style={styles.widgetHeader}>Improvement Suggestions</h2>
-          <ImprovementSuggestions />
+          <h3 style={styles.widgetHeader}>Improvement Suggestions</h3>
+          <ImprovementSuggestions loading={loading} />
         </section>
       </div>
     </div>

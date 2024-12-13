@@ -1,5 +1,10 @@
-/* index.css */
-
+.footer {
+  position: fixed;
+  width: 100%;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  bottom: 0px;
+}
 body {
   margin: 0;
   font-family: 'Google Sans', sans-serif;
@@ -7,7 +12,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: 'Google Sans', monospace;
 }

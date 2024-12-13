@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
-import { calculateFitScore } from '../../api/fitscore';
+import React, { useState, useEffect } from 'react';
+import { calculateFitScore } from '../../api/fitscore'; // Assuming this is where you fetch matched skills or use an API for this
 
-const MatchedSkills = () => {
+const MatchedSkills = ({ loading }) => {
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); 
+
+  useEffect(() => {
+    if (loading) {
+      handleFetchMatchedSkills();  // Automatically triggers when loading is true
+    }
+  }, [loading]);
 
   const handleFetchMatchedSkills = async () => {
     setError(null);
-    setSkills([]);
-    setLoading(true);
+    setSkills([]); 
 
     try {
-      const result = await calculateFitScore();
-      console.log(result);
+      // Replace this with the actual API function to get matched skills
+      const result = await calculateFitScore(); 
       setSkills(result.matched || []);
     } catch (err) {
       setError(err.message || 'An error occurred while fetching matched skills.');
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div>
-
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <button onClick={handleFetchMatchedSkills} disabled={loading}>
-        {loading ? 'Fetching...' : 'Fetch Matched Skills'}
-      </button>
-
-      {skills.length > 0 ? (
+      {loading ? (
+        <p>Loading Matched Skills...</p>
+      ) : (
         <ul>
           {skills.map((skill, index) => (
             <li key={index}>{skill}</li>
           ))}
         </ul>
-      ) : (
-        !loading && <p>No matched skills to display.</p>
       )}
     </div>
   );

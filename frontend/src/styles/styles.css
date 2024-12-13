@@ -1,34 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400&display=swap');
 
-/* General form container styling */
 .form-container {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  display: flex; 
+  flex-direction: column; 
+  align-items: stretch; 
+  max-width: 400px; 
+  margin: 0 auto;
+  padding: 20px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  gap: 20px; 
 }
 
-h2 {
+h3 {
   font-size: 24px;
   color: #333;
   text-align: center;
   margin-bottom: 20px;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif;  
 }
 
 .input-group {
   margin-bottom: 20px;
+  width: 100%;
 }
-
 .input-group label {
   font-weight: bold;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   display: block;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif;  
 }
 
 .input-field,
@@ -40,7 +42,8 @@ h2 {
   font-size: 16px;
   box-sizing: border-box;
   transition: border-color 0.3s ease-in-out;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 0px;
 }
 
 .input-field:focus,
@@ -53,25 +56,25 @@ h2 {
 }
 
 button {
-  padding: 8px 10px; /* Add padding for size */
-  font-size: 16px; /* Adjust font size */
-  background-color: #7cb47f; /* Set a background color */
-  color: white; /* Text color */
-  border: none; /* Remove default border */
-  border-radius: 10px; /* Rounds the button corners */
-  cursor: pointer; /* Change cursor to pointer */
-  transition: background-color 0.3s ease; /* Smooth transition for hover */
+  padding: 8px 10px; 
+  font-size: 16px; 
+  background-color: #007BFF; 
+  color: white; 
+  border: none; 
+  border-radius: 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
 button:hover {
-  background-color: #45a049; /* Slightly darker shade on hover */
+  background-color: #45a049; 
 }
 
 .word-count {
   font-size: 14px;
   color: #888;
   margin-top: 5px;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif;  
 }
 
 .submit-btn {
@@ -82,9 +85,10 @@ button:hover {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  width: 100%;
+  width: 100%; 
   transition: background-color 0.3s ease-in-out;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif; 
+  margin-top: 20px; 
 }
 
 .submit-btn:disabled {
@@ -93,7 +97,7 @@ button:hover {
 }
 
 .submit-btn:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #007BFF;
 }
 
 .error-message {
@@ -101,7 +105,7 @@ button:hover {
   font-size: 16px;
   text-align: center;
   margin-bottom: 20px;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif;  
 }
 
 .success-message {
@@ -109,23 +113,12 @@ button:hover {
   font-size: 16px;
   text-align: center;
   margin-bottom: 20px;
-  font-family: 'Google Sans', sans-serif;  /* Updated font */
+  font-family: 'Google Sans', sans-serif; 
 }
 
-/* Spinner styling */
 .spinner {
   text-align: center;
-}
-
-.spinner::before {
-  content: '';
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  border-top: 4px solid #007BFF;
-  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
 }
 
 @keyframes spin {
