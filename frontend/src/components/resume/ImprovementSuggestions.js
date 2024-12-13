@@ -17,7 +17,6 @@ const ImprovementSuggestions = ({ loading }) => {
     try {
       const result = await generateFeedback(""); 
       setSuggestions(result.suggestions || []);
-      console.log(result.feedback);
     } catch (err) {
       setError(err.message || 'An error occurred while fetching improvement suggestions.');
     }

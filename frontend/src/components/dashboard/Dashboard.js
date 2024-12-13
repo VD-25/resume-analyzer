@@ -37,7 +37,6 @@ const Dashboard = () => {
 
     try {
       const result = await calculateFitScore();
-      console.log(result); 
       setFitScore(result.fit_score); 
       setMatchedKeywords(result.matched || []); 
     } catch (err) {

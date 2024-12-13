@@ -24,17 +24,15 @@ export const generateFeedback = async (jobDescription) => {
     });
 
     const retrievedData = retrieveResponse.data?.data;
-    console.log('Data retrieved from retrieveData:', retrievedData);
 
     if (!retrievedData || !retrievedData.extractTextFromPdf) {
       throw new Error('Resume data not found or is incomplete.');
     }
-
     const response = await axios.post(
       `${API_BASE_URL}/generate-feedback`,
       {
         resume_text: retrievedData.extractTextFromPdf, 
-        job_description: jobDescription, 
+        job_description: retrievedData.jobDescription, 
       },
       {
         headers: {
@@ -42,10 +40,8 @@ export const generateFeedback = async (jobDescription) => {
         },
       }
     );
-    console.log('Generated FeedBack:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error generating feedback:', error);
     throw error.response?.data?.error || 'Failed to generate feedback.';
   }
 };
