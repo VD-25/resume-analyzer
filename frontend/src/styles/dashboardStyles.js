@@ -46,8 +46,8 @@ const dashboardStyles = {
     minHeight: "100px",
     margin: "10px 0",
     padding: "10px",
-    borderRadius: "10px",
-    border: "1px solid #ccc",
+    borderRadius: "0px",
+    border: "0px",
     fontSize: "16px",
   },
   feedbackContainer: {
