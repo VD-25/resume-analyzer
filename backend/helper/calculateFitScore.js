@@ -20,7 +20,7 @@ function calculateFitScore({ resume_text, job_description }) {
 
     return {
         fit_score: fitScore,
-        matched_keywords: [...new Set(matchedKeywords)],
+        matched: matchedKeywords,
         total_keywords_in_job: jobTokenSet.size,
     };
 }

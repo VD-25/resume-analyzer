@@ -22,6 +22,7 @@ const calculateFitScoreHandler = async (req, res) => {
 
         const response = {
             fit_score: fitScoreResult.fit_score,
+            matched: fitScoreResult.matched,
             feedback: feedbackResult.suggestions,
         };
 

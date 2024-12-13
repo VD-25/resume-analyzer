@@ -1,19 +1,26 @@
-const { readStorageFile, writeStorageFile } = require("./fileOperations");
+function deleteData(req, res) {
+    const { sessionId } = req.query;
 
-function deleteData(sessionId) {
+    if (!sessionId) {
+        return res.status(400).json({ error: "sessionId is required" });
+    }
+
     try {
         const tempStorage = readStorageFile();
-
         if (tempStorage[sessionId]) {
-            const dataToProcess = tempStorage[sessionId];
             delete tempStorage[sessionId];
-            writeStorageFile(tempStorage);
-
-            return { message: 'Data processed and removed from file', sessionId };
+            return res.status(200).json({
+                message: "Data deleted successfully",
+                sessionId,
+            });
+        } else {
+            return res.status(404).json({ error: "Session data not found" });
         }
-        return { error: 'Session data not found' };
     } catch (error) {
-        return { error: 'Error processing data', details: error.message };
+        return res.status(500).json({
+            error: "Error deleting data",
+            details: error.message,
+        });
     }
 }
 

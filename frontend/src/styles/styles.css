@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400&display=swap');
+
+.form-container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: stretch; 
+  max-width: 400px; 
+  margin: 0 auto;
+  padding: 20px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  gap: 20px; 
+}
+
+h3 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Google Sans', sans-serif;  
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.input-group label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+  font-family: 'Google Sans', sans-serif;  
+}
+
+.input-field,
+.textarea-field {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease-in-out;
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 0px;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+  border-color: #007BFF;
+}
+
+.textarea-field {
+  resize: vertical;
+}
+
+button {
+  padding: 8px 10px; 
+  font-size: 16px; 
+  background-color: #007BFF; 
+  color: white; 
+  border: none; 
+  border-radius: 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+button:hover {
+  background-color: #45a049; 
+}
+
+.word-count {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+  font-family: 'Google Sans', sans-serif;  
+}
+
+.submit-btn {
+  background-color: #007BFF;
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%; 
+  transition: background-color 0.3s ease-in-out;
+  font-family: 'Google Sans', sans-serif; 
+  margin-top: 20px; 
+}
+
+.submit-btn:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: #007BFF;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Google Sans', sans-serif;  
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Google Sans', sans-serif; 
+}
+
+.spinner {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
