@@ -81,7 +81,11 @@ const LoginPage = ({ onLoginSuccess }) => {
           />
         </div>
         {loading && <Spinner />}
-        <button type="submit" className="submit-btn" disabled={loading}>
+        <button 
+          type="submit" 
+          className="submit-btn" 
+          disabled={loading}
+          >
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

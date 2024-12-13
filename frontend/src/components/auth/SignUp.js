@@ -63,9 +63,8 @@ const SignUp = () => {
         {error && <p className="error-message">{error}</p>}
 
         <h2>Sign Up</h2>
-        <div className="input-group-container">
           <div className="input-group">
-            <label htmlFor="Username">Username</label>
+            <label htmlFor="Username">Username:</label>
             <input
               type="text"
               id="Username"
@@ -77,7 +76,7 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label htmlFor="Email">Email</label>
+            <label htmlFor="Email">Email:</label>
             <input
               type="email"
               id="Email"
@@ -89,7 +88,7 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label htmlFor="Password">Password</label>
+            <label htmlFor="Password">Password:</label>
             <input
               type="password"
               id="Password"
@@ -99,7 +98,6 @@ const SignUp = () => {
               placeholder="Enter your password"
             />
           </div>
-        </div>
         {loading && <Spinner />}
         <button
           type="submit"
