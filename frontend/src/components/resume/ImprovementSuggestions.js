@@ -7,18 +7,17 @@ const ImprovementSuggestions = ({ loading }) => {
 
   useEffect(() => {
     if (loading) {
-      handleGenerateSuggestions();  // Automatically triggers when loading is true
+      handleGenerateSuggestions(); 
     }
   }, [loading]);
 
   const handleGenerateSuggestions = async () => {
     setError(null);
     setSuggestions([]);
-
     try {
-      // Replace this with the actual API function to get improvement suggestions
       const result = await generateFeedback(""); 
       setSuggestions(result.suggestions || []);
+      console.log(result.feedback);
     } catch (err) {
       setError(err.message || 'An error occurred while fetching improvement suggestions.');
     }

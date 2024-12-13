@@ -8,7 +8,7 @@ const FitScoreComponent = ({ loading }) => {
 
   useEffect(() => {
     if (loading) {
-      handleCalculateFitScore();  // Automatically triggers when loading is true
+      handleCalculateFitScore();  
     }
   }, [loading]);
 

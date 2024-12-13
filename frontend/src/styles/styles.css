@@ -3,7 +3,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  background-color: #fff7e6; /* Background color for entire page */
+  background-color: #fff7e6; 
   font-family: 'Google Sans', sans-serif;
 }
 
@@ -19,9 +19,7 @@ body, html {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   gap: 20px;
-  box-sizing: border-box;
   margin: auto;  
-  min-height: 500px;
 }
 
 .form-title, .form-subtitle {
@@ -62,18 +60,18 @@ body, html {
   padding: 12px;
   font-size: 16px;
   box-sizing: border-box;
-  background-color: #fff; /* Removed the border and added a simple background */
-  border-radius: 0; /* No border-radius for clean look */
+  background-color: #fff; 
+  border-radius: 0;
   transition: all 0.3s ease;
   font-family: 'Google Sans', sans-serif;
   margin-bottom: 0;
-  border: none; /* Removed borders */
+  border: none;
 }
 
 .input-field:focus,
 .textarea-field:focus {
-  outline: none; /* No outline on focus */
-  box-shadow: 0 0 0 2px #007BFF; /* Added focus shadow for better user interaction */
+  outline: none;
+  box-shadow: 0 0 0 2px #007BFF; 
 }
 
 .textarea-field {
@@ -86,9 +84,9 @@ body, html {
   margin-top: 5px;
   font-family: 'Google Sans', sans-serif;
 }
+
 button {
-  display: inline-block; 
-  position: relative;  
+  display: inline-block;  
   width: 100%; 
   background-color: #007BFF;     
   font-size: 16px;
@@ -99,6 +97,9 @@ button {
   border: none;         
   cursor: pointer;  
   transition: background-color 0.3s ease;
+  position: sticky; 
+  top: 0; 
+  z-index: 1;
 }
 
 button:hover {
@@ -153,17 +154,25 @@ button:hover {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .animation-container {
-  margin-top: -100px;
-  margin-left: 118px;
-  display: flex; 
-  justify-content: center; 
+  position: relative;
+  height: 420px; 
+  display: flex;
+  justify-content: center;
   align-items: center;
+  margin-top:165px;
+  margin-left: 133px;
+  margin-bottom: -50px;
 }
-
+.upload-animation-container {
+  position: relative;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; 
+}
 .lottie-animation {
   width: 100%;
   max-width: 500px; 
-  margin: 0 auto; 
 }

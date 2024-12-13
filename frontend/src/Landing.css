@@ -14,38 +14,39 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  height: 100vh;
+  height: 90vh;
   background-color: #fff7e6; 
 }
 
 .text-container {
-  max-width: 50%;
+  max-width: 70%;
   padding: 40px; 
 }
 
 .landing-title {
-  font-size: 36px;
+  font-size: 42px;
   color: #000000;
   margin-bottom: 20px;
 }
 
 .landing-description {
-  font-size: 18px;
+  font-size: 24px;
   color: #2c2c2c;
   line-height: 1.5;
 }
 
 .animation-container {
-  max-width: 45%;
+  max-width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center; 
-  margin-right: 130px;
+  margin-right: 160px;
+  margin-bottom: 100px;
 }
 
 .lottie-animation {
-  width: 600px; 
-  height: 600px;
+  width: 800px; 
+  height: 800px;
 }
 
 .animation-attribution {
