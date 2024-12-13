@@ -4,7 +4,7 @@ import './index.css';
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>made with ❤️ daniel, felix, rick, truong, vidhi</p>
+      <p>made with ❤️ by daniel, felix, rick, truong, vidhi</p>
     </footer>
   );
 };

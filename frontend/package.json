@@ -11,6 +11,7 @@
         "bootstrap": "^5.3.3",
         "cors": "^2.8.5",
         "express": "^4.21.1",
+        "jspdf": "^2.5.2",
         "lottie-react": "^2.4.0",
         "mammoth": "^1.8.0",
         "react": "^18.3.1",

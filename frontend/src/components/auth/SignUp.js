@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { signup } from '../../api/auth'; // Import the signup API function
 import '../../styles/styles.css';
 import Spinner from '../shared/Spinner';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const SignUp = () => {
-  // State for form fields and submission status
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,12 +12,10 @@ const SignUp = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Handlers for input changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Validate input fields
   const validateInputs = () => {
     if (!username.trim() || !email.trim() || !password.trim()) {
       setError('All fields are required.');
@@ -34,30 +32,27 @@ const SignUp = () => {
     return true;
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs before submitting
     if (!validateInputs()) return;
 
-    setLoading(true); // Start loading when form is submitted
+    setLoading(true);
     setError('');
     setSuccess('');
 
     try {
-      // Call the signup API function
       const response = await signup(email, username, password);
-      setSuccess(response.message); // Assuming backend returns a success message
+      setSuccess(response.message);
       setError('');
-      setUsername(''); // Clear fields on success
+      setUsername('');
       setEmail('');
       setPassword('');
     } catch (err) {
-      setError(err || 'Something went wrong. Please try again.'); // Handle API error
+      setError(err || 'Something went wrong. Please try again.');
       setSuccess('');
     } finally {
-      setLoading(false); // Stop loading after submission is complete
+      setLoading(false);
     }
   };
 
@@ -67,52 +62,61 @@ const SignUp = () => {
         {success && <p className="success-message">{success}</p>}
         {error && <p className="error-message">{error}</p>}
 
-        <div>
-          <h2>Sign Up</h2>
+        <h2>Sign Up</h2>
+        <div className="input-group-container">
+          <div className="input-group">
+            <label htmlFor="Username">Username</label>
+            <input
+              type="text"
+              id="Username"
+              className="input-field"
+              value={username}
+              onChange={handleUsernameChange}
+              placeholder="Enter your username"
+            />
+          </div>
 
-          <label htmlFor="Username">Username</label>
-          <input
-            type="text"
-            id="Username"
-            className="input-field"
-            value={username}
-            onChange={handleUsernameChange}
-            placeholder="Enter your username"
-          />
-        </div>
+          <div className="input-group">
+            <label htmlFor="Email">Email</label>
+            <input
+              type="email"
+              id="Email"
+              className="input-field"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="Enter your email"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="Email">Email</label>
-          <input
-            type="email"
-            id="Email"
-            className="input-field"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="Enter your email"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="Password">Password</label>
-          <input
-            type="password"
-            id="Password"
-            className="input-field"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Enter your password"
-          />
+          <div className="input-group">
+            <label htmlFor="Password">Password</label>
+            <input
+              type="password"
+              id="Password"
+              className="input-field"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="Enter your password"
+            />
+          </div>
         </div>
         {loading && <Spinner />}
         <button
           type="submit"
           className="submit-btn"
-          disabled={loading} // Disable button while submitting
+          disabled={loading}
         >
           {loading ? 'Submitting...' : 'Sign Up'}
         </button>
       </form>
+      <div>
+        <Player
+          autoplay
+          loop
+          src="/register.json"
+          className="lottie-animation"
+        />
+      </div>
     </div>
   );
 };

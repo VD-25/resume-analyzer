@@ -42,7 +42,6 @@ body, html {
   transition: color 0.3s ease, border-bottom 0.3s ease; 
 }
 
-/* Underline effect when hovering */
 .navbar-link::after {
   content: '';
   position: absolute;

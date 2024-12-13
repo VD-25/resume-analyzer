@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import "../../styles/styles.css";
+import '../../styles/styles.css';
 import Spinner from '../shared/Spinner';
 import { login } from '../../api/auth'; // Import the reusable API function for login
 import { saveToken } from '../../utils/token';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const LoginPage = ({ onLoginSuccess }) => {
   // Define state for form fields
@@ -84,6 +85,15 @@ const LoginPage = ({ onLoginSuccess }) => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+      {/* Animation */}
+      <div>
+        <Player
+          autoplay
+          loop
+          src="/login.json"
+          className="lottie-animation"
+        />
+      </div>
     </div>
   );
 };
