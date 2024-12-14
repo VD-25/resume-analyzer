@@ -11,7 +11,7 @@ async function generateFeedback(resume_text, job_description, selected_filters) 
         return { error: 'Invalid or missing job description.' };
     }
 
-    console.log('Received inputs:', { resume_text, job_description, selected_filters });
+    //console.log('Received inputs:', { resume_text, job_description, selected_filters });
 
     const resumeTokens = new Set(tokenizeAndNormalize(resume_text));
     // console.log('Normalized Resume Tokens:', [...resumeTokens]);
@@ -23,7 +23,7 @@ async function generateFeedback(resume_text, job_description, selected_filters) 
 
     try {
         const [response] = await client.analyzeEntities({ document });
-        console.log('Google NLP Entities:', response.entities);
+        //console.log('Google NLP Entities:', response.entities);
 
         const jobEntities = response.entities || [];
         const missingKeywords = [];
@@ -31,17 +31,17 @@ async function generateFeedback(resume_text, job_description, selected_filters) 
 
         for (const entity of jobEntities) {
             if (selected_filters.length > 0 && !selected_filters.includes(entity.type)) {
-                console.log(`Skipping entity "${entity.name}" of type "${entity.type}"`);
+                //console.log(`Skipping entity "${entity.name}" of type "${entity.type}"`);
                 continue;
             }
             if (entity.type == "SKILL") console.log("out of if statement");
 
             const normalizedEntityTokens = tokenizeAndNormalize(entity.name);
-            console.log(`Entity: ${entity.name}`);
-            console.log('Normalized Entity Tokens:', normalizedEntityTokens);
+            //console.log(`Entity: ${entity.name}`);
+            //console.log('Normalized Entity Tokens:', normalizedEntityTokens);
 
             const isEntityPartiallyCovered = normalizedEntityTokens.some((token) => resumeTokens.has(token));
-            console.log('Is entity partially covered:', isEntityPartiallyCovered);
+            //console.log('Is entity partially covered:', isEntityPartiallyCovered);
 
             if (!isEntityPartiallyCovered) {
                 missingKeywords.push(entity.name);
@@ -56,10 +56,10 @@ async function generateFeedback(resume_text, job_description, selected_filters) 
             missing_keywords: missingKeywords,
             suggestions: suggestions,
         };
-        console.log('Missing Keywords:', missingKeywords);
-        console.log('Suggestions:', suggestions);
+        //console.log('Missing Keywords:', missingKeywords);
+        //console.log('Suggestions:', suggestions);
 
-        console.log('Generated Response:', responseObject);
+        //console.log('Generated Response:', responseObject);
 
         return responseObject;
     } catch (error) {

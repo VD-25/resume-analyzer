@@ -13,51 +13,63 @@ describe("deleteData", () => {
     const mockData = {
       [sessionId]: { resumeText: "Sample resume text", jobDescription: "Sample job description" },
     };
-
     readStorageFile.mockReturnValue(mockData);
 
-    const updatedData = {};
-    writeStorageFile.mockImplementationOnce(data => {
-      expect(data).toEqual(updatedData);
+    const updatedData = {}; // Expect storage to be empty after deletion
+    writeStorageFile.mockImplementationOnce((data) => {
+        expect(data).toEqual(updatedData);
     });
 
-    const result = deleteData(sessionId);
+    const req = { query: { sessionId } }; // Mock request with sessionId in query
+    const res = {
+      json: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    deleteData(req, res);
 
-    expect(result).toEqual({ message: "Data processed and removed from file", sessionId });
+    expect(res.json).toHaveBeenCalledWith({ message: "Data deleted successfully", sessionId });
     expect(readStorageFile).toHaveBeenCalledTimes(1);
-    expect(writeStorageFile).toHaveBeenCalledWith(updatedData);
   });
 
   it("should return an error if the session ID is not found", () => {
-    const sessionId = "nonexistentSession";
     const mockData = {
       token_idX: { resumeText: "Other text", jobDescription: "Other job description" },
     };
-
     readStorageFile.mockReturnValue(mockData);
 
-    const result = deleteData(sessionId);
+    // Mock Express.js request and response
+    const req = { query: { sessionId: "nonexistentSession" } }; // Non-existent sessionId
+    const res = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+    };
+    deleteData(req, res);
 
-    expect(result).toEqual({ error: "Session data not found" });
     expect(readStorageFile).toHaveBeenCalledTimes(1);
-    expect(writeStorageFile).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ error: "Session data not found" });
   });
 
   it("should return an error if there is an issue reading or writing the file", () => {
-    const sessionId = "token_idX";
-
     // Mock readStorageFile to throw an error
     readStorageFile.mockImplementation(() => {
       throw new Error("File read error");
     });
 
-    const result = deleteData(sessionId);
+    // Mock Express.js request and response
+    const req = { query: { sessionId: "token_idX" } };
+    const res = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+    };
+    deleteData(req, res);
 
-    expect(result).toEqual({
-      error: "Error processing data",
-      details: "File read error",
-    });
     expect(readStorageFile).toHaveBeenCalledTimes(1);
     expect(writeStorageFile).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Error deleting data",
+      details: "File read error",
+    });
   });
 });

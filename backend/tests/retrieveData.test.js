@@ -1,5 +1,4 @@
 const retrieveData = require("../implementTempInMemoryStorage/retrieveData");
-
 const { readStorageFile } = require("../implementTempInMemoryStorage/fileOperations");
 
 jest.mock("../implementTempInMemoryStorage/fileOperations"); // Mock the file operations
@@ -16,10 +15,16 @@ describe("retrieveData", () => {
         };
         readStorageFile.mockReturnValue(mockStorage); // Mock initial storage
 
-        const result = retrieveData("session1");
+        // Mock Express.js request and response
+        const req = { query: { sessionId: "session1" } };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        retrieveData(req, res);
 
         expect(readStorageFile).toHaveBeenCalledTimes(1);
-        expect(result).toEqual({
+        expect(res.json).toHaveBeenCalledWith({
             sessionId: "session1",
             data: { extractTextFromPdf: "Sample text", jobDescription: "Sample description" },
         });
@@ -31,10 +36,17 @@ describe("retrieveData", () => {
         };
         readStorageFile.mockReturnValue(mockStorage); // Mock storage without the target session
 
-        const result = retrieveData("session1");
+        // Mock Express.js request and response
+        const req = { query: {} };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        retrieveData(req, res);
 
-        expect(readStorageFile).toHaveBeenCalledTimes(1);
-        expect(result).toEqual({ error: "Session data not found" });
+        expect(readStorageFile).toHaveBeenCalledTimes(0);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "sessionId is required" });
     });
 
     it("should handle errors when readStorageFile throws an error", () => {
@@ -43,10 +55,17 @@ describe("retrieveData", () => {
             throw new Error(errorMessage);
         });
 
-        const result = retrieveData("session1");
+        // Mock Express.js request and response
+        const req = { query: { sessionId: "session1" } };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        retrieveData(req, res);
 
         expect(readStorageFile).toHaveBeenCalledTimes(1);
-        expect(result).toEqual({
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({
             error: "Error retrieving data",
             details: errorMessage,
         });

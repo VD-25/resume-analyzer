@@ -11,7 +11,7 @@ import FilterCheckboxsList from "./FilterCheckboxsList";
 
 const Dashboard = () => {
   const [jobDescription, setJobDescription] = useState("");
-  const [feedback, setFeedback] = useState([]);
+  const [feedback, setFeedback] = useState(null);
   const [fitScore, setFitScore] = useState(null);
   const [matchedKeywords, setMatchedKeywords] = useState([]);
   const [error, setError] = useState(null);
@@ -23,6 +23,7 @@ const Dashboard = () => {
     { label: "Experience", value: "EXPERIENCE" },
     { label: "Location", value: "LOCATION" },
     { label: "Organization", value: "ORGANIZATION" },
+    { label: "Other", value: "OTHER" },
   ];
   const handleFilterChange = (value, isChecked) => {
     setSelectedFilters((prevFilters) =>
@@ -148,7 +149,7 @@ const Dashboard = () => {
   
         <section style={styles.widget}>
           <h3 style={styles.widgetHeader}>Improvement Suggestions</h3>
-          <ImprovementSuggestions feedback={feedback} loading={loading} />
+          {feedback && feedback.suggestions.length > 0 && <ImprovementSuggestions feedback={feedback} loading={loading} />}
         </section>
       </div>
     </div>

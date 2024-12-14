@@ -1,3 +1,5 @@
+const { readStorageFile, writeStorageFile } = require('./fileOperations');
+
 function deleteData(req, res) {
     const { sessionId } = req.query;
 

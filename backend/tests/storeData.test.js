@@ -13,20 +13,30 @@ describe("storeData", () => {
         readStorageFile.mockReturnValue(mockStorage); // Mock initial empty storage
         writeStorageFile.mockImplementation(() => {}); // Mock write behavior
 
-        const sessionId = "token_idX";
-        const extractTextFromPdf = "Sample text content from PDF";
-        const jobDescription = "Sample job description";
-
-        const result = await storeData(sessionId, extractTextFromPdf, jobDescription);
-
-        expect(result).toEqual({
-            message: "Data stored temporarily in file",
-            sessionId,
-        });
+        // Mock Express.js request and response
+        const req = {
+            body: {
+                sessionId: "token_idX",
+                extractTextFromPdf: "Sample text content from PDF",
+                jobDescription: "Sample job description",
+            },
+        };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        await storeData(req, res);
 
         expect(readStorageFile).toHaveBeenCalledTimes(1);
         expect(writeStorageFile).toHaveBeenCalledWith({
-            token_idX: { extractTextFromPdf, jobDescription },
+            token_idX: {
+                extractTextFromPdf: "Sample text content from PDF",
+                jobDescription: "Sample job description",
+            },
+        });
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Data stored temporarily in file",
+            sessionId: "token_idX",
         });
     });
 
@@ -41,11 +51,19 @@ describe("storeData", () => {
         readStorageFile.mockReturnValue(mockStorage);
         writeStorageFile.mockImplementation(() => {});
 
-        const sessionId = "token_id1001";
-        const extractTextFromPdf = "New sample text";
-        const jobDescription = "New job description";
-
-        const result = await storeData(sessionId, extractTextFromPdf, jobDescription);
+        // Mock Express.js request and response
+        const req = {
+            body: {
+                sessionId: "token_id1001",
+                extractTextFromPdf: "New sample text",
+                jobDescription: "New job description",
+            },
+        };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        await storeData(req, res);
 
         // Ensure the last-added data is removed
         expect(readStorageFile).toHaveBeenCalledTimes(1);
@@ -54,13 +72,15 @@ describe("storeData", () => {
         );
         expect(writeStorageFile).toHaveBeenCalledWith(
             expect.objectContaining({
-                [sessionId]: { extractTextFromPdf, jobDescription },
+                token_id1001: {
+                    extractTextFromPdf: "New sample text",
+                    jobDescription: "New job description",
+                },
             })
         );
-
-        expect(result).toEqual({
+        expect(res.json).toHaveBeenCalledWith({
             message: "Data stored temporarily in file",
-            sessionId,
+            sessionId: "token_id1001",
         });
     });
 
@@ -70,18 +90,26 @@ describe("storeData", () => {
             throw new Error(errorMessage);
         });
 
-        const sessionId = "token_idX";
-        const extractTextFromPdf = "Sample text";
-        const jobDescription = "Sample description";
-
-        const result = await storeData(sessionId, extractTextFromPdf, jobDescription);
-
-        expect(result).toEqual({
-            error: "Error storing data",
-            details: errorMessage,
-        });
+        // Mock Express.js request and response
+        const req = {
+            body: {
+                sessionId: "token_idX",
+                extractTextFromPdf: "Sample text",
+                jobDescription: "Sample description",
+            },
+        };
+        const res = {
+            json: jest.fn(),
+            status: jest.fn().mockReturnThis(),
+        };
+        await storeData(req, res);
 
         expect(readStorageFile).toHaveBeenCalledTimes(1);
         expect(writeStorageFile).not.toHaveBeenCalled();
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({
+            error: "Error storing data",
+            details: errorMessage,
+        });
     });
 });
