@@ -1,0 +1,18 @@
+.filter-checkboxes-list {
+    display: flex;
+    flex-wrap: wrap; /* Ensure checkboxes wrap to the next line if needed */
+    align-items: center;
+    gap: 20px; /* Space between checkboxes */
+}
+
+.filter-checkbox {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-right: 15px;
+    display: flex; /* Ensure input and text align properly */
+    align-items: center;
+}
+
+.filter-checkbox input {
+    margin-right: 2px; /* Add space between the checkbox and text */
+}

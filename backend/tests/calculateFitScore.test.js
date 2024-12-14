@@ -11,7 +11,7 @@ describe('calculateFitScore', () => {
 
         expect(result).toEqual({
             fit_score: 38, 
-            matched_keywords: ['software', 'engineer', 'python'],
+            matched: ['software', 'engineer', 'python'],
             total_keywords_in_job: 8,
         });
     });
@@ -26,7 +26,7 @@ describe('calculateFitScore', () => {
 
         expect(result).toEqual({
             fit_score: 100,
-            matched_keywords: ['python', 'java', 'aws', 'rest', 'apis'],
+            matched: ['python', 'java', 'aws', 'rest', 'apis'],
             total_keywords_in_job: 5,
         });
     });
@@ -49,7 +49,7 @@ describe('calculateFitScore', () => {
 
         expect(result).toEqual({
             fit_score: 0,
-            matched_keywords: [],
+            matched: [],
             total_keywords_in_job: 8,
         });
     });

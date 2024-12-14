@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { generateFeedback } from '../../api/feedback';
 
-const ImprovementSuggestions = ({ loading }) => {
+const ImprovementSuggestions = ({ feedback, loading }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (loading) {
-      handleGenerateSuggestions(); 
+    if (feedback && feedback.suggestions) {
+      setSuggestions(feedback.suggestions);
+    } else {
+      setSuggestions([]);
     }
-  }, [loading]);
-
-  const handleGenerateSuggestions = async () => {
-    setError(null);
-    setSuggestions([]);
-    try {
-      const result = await generateFeedback(""); 
-      setSuggestions(result.suggestions || []);
-    } catch (err) {
-      setError(err.message || 'An error occurred while fetching improvement suggestions.');
-    }
-  };
+  }, [feedback]);
 
   return (
     <div>

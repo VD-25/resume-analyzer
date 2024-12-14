@@ -24,6 +24,12 @@ const router = express.Router();
  *                 type: string
  *                 description: The job description text provided by the user.
  *                 example: "Looking for a software engineer with experience in Python, AWS, and REST APIs."
+ *               selected_filters:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Optional filters for narrowing down the feedback to specific entity types (e.g., SKILL, ORGANIZATION, LOCATION).
+ *                 example: ["SKILL", "ORGANIZATION"]
  *     responses:
  *       200:
  *         description: Feedback generated successfully.
