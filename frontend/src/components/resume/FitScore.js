@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateFitScore } from '../../api/fitscore';
-import ProgressBar from 'react-progressbar';
+// import ProgressBar from 'react-progressbar';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const FitScoreComponent = ({ loading }) => {
   const [fitScore, setFitScore] = useState(null);
@@ -35,7 +36,7 @@ const FitScoreComponent = ({ loading }) => {
           {fitScore !== null && (
             <div>
               <h3>Fit Score: {fitScore}%</h3>
-              <ProgressBar completed={fitScore} max={100} />
+              <ProgressBar variant="success" now={fitScore} />
             </div>
           )}
         </>
