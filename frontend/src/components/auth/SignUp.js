@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { signup } from '../../api/auth'; // Import the signup API function
 import '../../styles/styles.css';
 import Spinner from '../shared/Spinner';
-import { Player } from '@lottiefiles/react-lottie-player';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -107,14 +106,6 @@ const SignUp = () => {
           {loading ? 'Submitting...' : 'Sign Up'}
         </button>
       </form>
-      <div>
-        <Player
-          autoplay
-          loop
-          src="/register.json"
-          className="lottie-animation"
-        />
-      </div>
     </div>
   );
 };

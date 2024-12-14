@@ -37,7 +37,7 @@ const dashboardStyles = {
     margin: "0 auto", 
   },
   buttonHover: {
-    backgroundColor: "#CA3C25",
+    backgroundColor: "#45a049",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",  
   },
 

@@ -60,8 +60,6 @@ const ResumeUpload = () => {
       setError('Text input cannot be empty.');
       return;
     }
-    
-    // Reset the error message before starting the loading
     setError('');
   
     setLoading(true);
@@ -74,8 +72,7 @@ const ResumeUpload = () => {
   
       const resumeResponse = await uploadResume(file, sessionId);
       const jobDescriptionResponse = await submitJobDescription(textInput, sessionId);
-      
-      // Assuming that resumeResponse and jobDescriptionResponse return objects with textContent or equivalent
+
       const resumeText = resumeResponse.text || resumeResponse.textContent || resumeResponse.extractedText;
       const jobDescription = jobDescriptionResponse.cleanedText;
   
@@ -105,6 +102,7 @@ const ResumeUpload = () => {
     if (!textInput.trim()) return 'Enter Job Description';
     return 'Upload Resume';
   };
+  
   return (
     <div className="form-container">
       {/* Form Heading */}
@@ -160,7 +158,7 @@ const ResumeUpload = () => {
       </form>
 
       {/* Animation */}
-      <div className="animation-container">
+      <div className="upload-animation-container" style={{ marginTop: "20px" }}> {/* Adjusted marginTop to reduce space */}
         <Player
           autoplay
           loop

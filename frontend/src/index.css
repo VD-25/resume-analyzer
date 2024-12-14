@@ -1,17 +1,30 @@
-.footer {
-  position: fixed;
-  width: 100%;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  bottom: 0px;
-}
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: 'Google Sans', sans-serif;
-  text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container takes at least 100% of the viewport height */
+}
+
+.main-content {
+  flex: 1;
+}
+.footer {
+  width: 100%;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 10px 0;
+  background-color: transparent;
+  flex-shrink: 0; /* Prevent shrinking of the footer */
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
 code {
   font-family: 'Google Sans', monospace;
 }

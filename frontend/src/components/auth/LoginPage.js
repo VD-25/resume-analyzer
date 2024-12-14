@@ -3,7 +3,6 @@ import '../../styles/styles.css';
 import Spinner from '../shared/Spinner';
 import { login } from '../../api/auth'; // Import the reusable API function for login
 import { saveToken } from '../../utils/token';
-import { Player } from '@lottiefiles/react-lottie-player';
 
 const LoginPage = ({ onLoginSuccess }) => {
   // Define state for form fields
@@ -11,6 +10,7 @@ const LoginPage = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -19,11 +19,13 @@ const LoginPage = ({ onLoginSuccess }) => {
     // Basic validation
     if (!email.trim() || !password.trim()) {
       setError('Please enter both email and password.');
+      setSuccessMessage('');
       return;
     }
 
     setLoading(true);
     setError('');
+    setSuccessMessage('');
 
     try {
       // Call the login API function
@@ -38,6 +40,7 @@ const LoginPage = ({ onLoginSuccess }) => {
   
       // Notify parent component about successful login
       onLoginSuccess(true);
+      setSuccessMessage('Login successful!');
   
       // Clear form fields
       setEmail('');
@@ -45,7 +48,8 @@ const LoginPage = ({ onLoginSuccess }) => {
       setError('');
     } catch (err) {
       console.error('Login error:', err);
-      setError(err || 'Invalid email or password.');
+      setError(err.message || 'Invalid email or password.');
+      setSuccessMessage('');
     } finally {
       setLoading(false);
     }
@@ -55,6 +59,7 @@ const LoginPage = ({ onLoginSuccess }) => {
     <div className="login-container">
       <form onSubmit={handleSubmit} className="form-container">
         {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
         <h2>Login</h2>
         <div className="input-group">
           <label htmlFor="email">Email:</label>
@@ -89,15 +94,6 @@ const LoginPage = ({ onLoginSuccess }) => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      {/* Animation */}
-      <div>
-        <Player
-          autoplay
-          loop
-          src="/login.json"
-          className="lottie-animation"
-        />
-      </div>
     </div>
   );
 };
