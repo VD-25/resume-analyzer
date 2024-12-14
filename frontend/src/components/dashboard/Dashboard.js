@@ -17,39 +17,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
 
   const handleGenerateFeedback = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await generateFeedback(jobDescription);
-      setFeedback(result.suggestions || []);
-      setFitScore(result.fitScore || 0);
-      setMatchedKeywords(result.matchedKeywords || []);
-    } catch (err) {
-      setError(err.message || "Failed to generate feedback.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCalculateFitScore = async () => {
-    setError(null);
-    setFitScore(null);
-
-    try {
-      const result = await calculateFitScore();
-      setFitScore(result.fit_score); 
-      setMatchedKeywords(result.matched || []); 
-    } catch (err) {
-      setError(err.message || 'An error occurred while calculating the fit score.');
-    }
-  };
-
-  const handleExportPDF = async () => {
     if (fitScore === null) {
       setLoading(true);
       setError(null);
       try {
-        // Fetch the fit score and matched keywords if not already available
         const result = await calculateFitScore();
         setFitScore(result.fit_score);
         setMatchedKeywords(result.matched || []);
@@ -59,10 +30,11 @@ const Dashboard = () => {
         setLoading(false);
       }
     }
-  
-    // Check if fitScore is still null (in case of an error during fetching)
+  };
+
+  const handleExportPDF = async () => {  
     if (fitScore === null) {
-      return; // Do not proceed if the fit score is still unavailable
+      return; 
     }
   
     // Proceed with PDF generation
@@ -120,7 +92,7 @@ const Dashboard = () => {
               onClick={handleGenerateFeedback}
               style={{
                 ...styles.button,
-                marginBottom: "10px", // Adds space between the two buttons
+                marginBottom: "10px",
               }}
             >
               {loading ? "Generating..." : "Generate Feedback"}
@@ -129,7 +101,7 @@ const Dashboard = () => {
               onClick={handleExportPDF}
               style={{
                 ...styles.button,
-                marginLeft: "0", // Removes the default left margin
+                marginLeft: "0", 
               }}
             >
               Export as PDF
