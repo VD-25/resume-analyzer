@@ -17,27 +17,28 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
 
   const handleGenerateFeedback = async () => {
-    if (fitScore === null) {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await calculateFitScore();
-        setFitScore(result.fit_score);
-        setMatchedKeywords(result.matched || []);
-      } catch (err) {
-        setError(err.message || "Failed to fetch fit score.");
-      } finally {
-        setLoading(false);
-      }
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await calculateFitScore();
+      setFitScore(result.fit_score);
+      setMatchedKeywords(result.matched || []);
+      
+      // Generate and set feedback
+      const feedbackResult = await generateFeedback();
+      setFeedback(feedbackResult);
+    } catch (err) {
+      setError(err.message || "Failed to fetch data.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleExportPDF = async () => {  
+  const handleExportPDF = async () => {
     if (fitScore === null) {
-      return; 
+      return;
     }
   
-    // Proceed with PDF generation
     const doc = new jsPDF();
     const date = new Date().toLocaleDateString();
     let currentY = 10;
@@ -56,7 +57,7 @@ const Dashboard = () => {
     matchedKeywords.forEach((skill) => {
       doc.text(`- ${skill}`, 20, currentY);
       currentY += 10;
-      
+  
       if (currentY > 270) {
         doc.addPage();
         currentY = 10;
@@ -67,17 +68,30 @@ const Dashboard = () => {
     doc.text("Improvement Suggestions:", 10, currentY);
     currentY += 10;
     doc.setFontSize(10);
-    feedback.forEach((suggestion) => {
-      doc.text(`- ${suggestion}`, 20, currentY, { maxWidth: 170 });
-      currentY += 10;
-      if (currentY > 280) {
-        doc.addPage();
-        currentY = 10;
-      }
-    });
+  
+    if (feedback && feedback.length > 0) {
+      feedback.forEach((suggestion, index) => {
+        if (suggestion) {
+          const lines = doc.splitTextToSize(`${index + 1}. ${suggestion}`, 170);
+          lines.forEach((line, lineIndex) => {
+            if (currentY > 270) {
+              doc.addPage();
+              currentY = 10;
+            }
+            doc.text(lineIndex === 0 ? line : `   ${line}`, 20, currentY);
+            currentY += 10;
+          });
+          currentY += 5; 
+        }
+      });
+    } else {
+      doc.text("No improvement suggestions available.", 20, currentY);
+    }
   
     doc.save("aiResumeAnalysisReport.pdf");
   };
+  
+  
   
   
   return (
