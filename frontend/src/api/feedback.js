@@ -4,7 +4,7 @@ import { getToken, isTokenValid, clearToken } from '../utils/token';
 const API_BASE_URL = 'http://localhost:3000/api';
 
 // Generate feedback for a resume
-export const generateFeedback = async (jobDescription) => {
+export const generateFeedback = async (selectedFilters) => {
   try {
     if (!isTokenValid()) {
       clearToken();
@@ -24,7 +24,6 @@ export const generateFeedback = async (jobDescription) => {
     });
 
     const retrievedData = retrieveResponse.data?.data;
-
     if (!retrievedData || !retrievedData.extractTextFromPdf) {
       throw new Error('Resume data not found or is incomplete.');
     }
@@ -32,7 +31,8 @@ export const generateFeedback = async (jobDescription) => {
       `${API_BASE_URL}/generate-feedback`,
       {
         resume_text: retrievedData.extractTextFromPdf, 
-        job_description: retrievedData.jobDescription, 
+        job_description: retrievedData.jobDescription,
+        selected_filters: selectedFilters,
       },
       {
         headers: {

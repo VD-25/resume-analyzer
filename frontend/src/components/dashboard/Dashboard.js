@@ -7,6 +7,7 @@ import { generateFeedback } from "../../api/feedback";
 import { calculateFitScore } from "../../api/fitscore";
 import styles from "../../styles/dashboardStyles";
 import jsPDF from "jspdf";
+import FilterCheckboxsList from "./FilterCheckboxsList";
 
 const Dashboard = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -15,6 +16,19 @@ const Dashboard = () => {
   const [matchedKeywords, setMatchedKeywords] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const filters = [
+    { label: "Skill", value: "SKILL" },
+    { label: "Experience", value: "EXPERIENCE" },
+    { label: "Location", value: "LOCATION" },
+    { label: "Organization", value: "ORGANIZATION" },
+  ];
+  const handleFilterChange = (value, isChecked) => {
+    setSelectedFilters((prevFilters) =>
+      isChecked ? [...prevFilters, value] : prevFilters.filter((filter) => filter !== value)
+    );
+  };
 
   const handleGenerateFeedback = async () => {
     setLoading(true);
@@ -25,7 +39,7 @@ const Dashboard = () => {
       setMatchedKeywords(result.matched || []);
       
       // Generate and set feedback
-      const feedbackResult = await generateFeedback();
+      const feedbackResult = await generateFeedback(selectedFilters);
       setFeedback(feedbackResult);
     } catch (err) {
       setError(err.message || "Failed to fetch data.");
@@ -91,9 +105,6 @@ const Dashboard = () => {
     doc.save("aiResumeAnalysisReport.pdf");
   };
   
-  
-  
-  
   return (
     <div style={styles.dashboard}>
       <header style={styles.header}>
@@ -121,6 +132,7 @@ const Dashboard = () => {
               Export as PDF
             </button>
           </div>
+          <FilterCheckboxsList filters={filters} selectedFilters={selectedFilters} onFilterChange={handleFilterChange}/>
           {error && <p style={styles.error}>{error}</p>}
         </section>
   
