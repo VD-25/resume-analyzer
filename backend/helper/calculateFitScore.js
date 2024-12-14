@@ -19,8 +19,8 @@ function calculateFitScore({ resume_text, job_description }) {
     );
 
     return {
-        fit_score: fitScore,
-        matched: matchedKeywords,
+        fit_score: Math.min(fitScore, 100),
+        matched: Array.from(new Set(matchedKeywords)),
         total_keywords_in_job: jobTokenSet.size,
     };
 }

@@ -4,7 +4,12 @@ const STOP_WORDS = new Set([
     'is', 'are', 'was', 'were', 'be', 'been', 'being', 'that', 'this',
     'it', 'not', 'no', 'yes', 'so', 'too', 'very', 'can', 'cannot', 'could', 
     'should', 'would', 'may', 'might', 'must', 'shall', 'will', 'do', 'does', 
-    'did', 'has', 'have', 'had', 'having'
+    'did', 'has', 'have', 'had', 'having', "customer", "transaction", "date",
+
+    "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
+    "i", "you", "they", "we", "he", "she", "it", "my", "your", "their", "our", "his", 
+    "her", "its",
+    "education", "school", "new", "institute", 
 ]);
 
 module.exports = { STOP_WORDS };
