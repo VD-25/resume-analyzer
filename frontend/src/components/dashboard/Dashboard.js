@@ -69,8 +69,8 @@ const Dashboard = () => {
     currentY += 10;
     doc.setFontSize(10);
   
-    if (feedback && feedback.length > 0) {
-      feedback.forEach((suggestion, index) => {
+    if (feedback && feedback.suggestions.length > 0) {
+      feedback.suggestions.forEach((suggestion, index) => {
         if (suggestion) {
           const lines = doc.splitTextToSize(`${index + 1}. ${suggestion}`, 170);
           lines.forEach((line, lineIndex) => {
