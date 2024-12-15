@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
-import Dashboard from '../components/Dashboard';
+import Dashboard from '../components/dashboard/Dashboard';
 
 jest.mock('axios');
 
@@ -19,7 +19,7 @@ test('renders dashboard with data', async () => {
 
   render(<Dashboard />);
 
-  await waitFor(() => expect(screen.getByText('Fit Score')).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText('Fit Score: ')).toBeInTheDocument());
 
   expect(screen.getByText('85%')).toBeInTheDocument();
   expect(screen.getByText('Python')).toBeInTheDocument();

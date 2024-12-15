@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SignUp from '../components/SignUp';
+import SignUp from '../components/auth/SignUp';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ResumeUpload from '../components/ResumeUpload'; // Adjust path as necessary
+import ResumeUpload from '../components/resume/ResumeUpload'; // Adjust path as necessary
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 

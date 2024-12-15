@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import  axios  from 'axios';
-import LoginPage from '../components/LoginPage';
+import LoginPage from '../components/auth/LoginPage';
 
 jest.mock('axios'); // Mock the axios library
 
