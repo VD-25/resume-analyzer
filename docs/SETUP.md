@@ -1,40 +1,41 @@
 # Project Setup
 
-## Installation and Dependencies
+### Cloning Repository
+1. Clone the repository: `git clone https://github.com/VD-25/resume-analyzer.git`
+2. Change directory with ```cd resume-analyzer```
 
-- Clone the repository: `git clone https://github.com/VD-25/resume-analyzer.git`
-- In ```resume-analyzer``` project, install dependencies:
-```
-cd backend
-npm install
-cd ../frontend
-npm install
-```
-1. Create a ```service-account.json``` file in folder ```\backend``` and paste the contents direct messaged via. Discord by PM: Dholakia, Vidhi2
-2. Create a ```.env``` file in folder ```\backend``` containing: ```JWT_SECRET="tokenHere"```, tokenHere is your private JWT token direct messaged via. Discord by PM: Dholakia, Vidhi.
-3. On a new line in the newly created ```.env```, paste the following content: ```GOOGLE_APPLICATION_CREDENTIALS=./service-account.json```
+### Setting Up Tokens & Keys:
+1. Create a ```service-account.json``` file in folder ```\backend``` and paste the contents direct messaged via. Discord by PM: Dholakia, Vidhi.
+2. Create a ```.env``` file in folder ```\backend``` and paste the contents direct messaged via. Discord by PM: Dholakia, Vidhi.
 
-- Scripts
-
+### Installing Dependencies with Scripts:
+Step 1:
 ```bash
 chmod a+x *.sh
 ```
-
-- Install dependencies:
+Step 2:
 ```bash
 ./install.sh
 ```
+-----
+### Running Application:
 
-- Run tests:
+Step 1: In Current Terminal
+```bash
+cd ./backend & npm start
+```
+Step 2: In New Terminal
+```bash
+cd resume-analyzer
+cd ./frontend & npm start
+```
+Step 3: Press ```y``` and hit _Enter_ key when prompted: "Would you like to run the app on another port instead? » (Y/n)"
+
+-----
+### Running Tests:
 ```bash
 ./tests.sh
 ```
 
-- Run app:
-```bash
-cd ./backend & npm start
-# in new terminal
-cd ./frontend & npm start
-```
 - You should be lead to the homepage. Sign up, log in, then navigate between endpoints.
 
