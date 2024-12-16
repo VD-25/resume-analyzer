@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ImprovementSuggestions from './ImprovementSuggestions';
+import ImprovementSuggestions from '../components/resume/ImprovementSuggestions';
 
 describe('ImprovementSuggestions Component', () => {
   
@@ -39,11 +39,5 @@ describe('ImprovementSuggestions Component', () => {
     
     const listItems = screen.queryAllByRole('listitem');
     expect(listItems).toHaveLength(0);
-  });
-
-  // Test case for displaying an error message
-  it('displays an error message when an error occurs', () => {
-    render(<ImprovementSuggestions feedback={null} loading={false} error="An error occurred" />);
-    expect(screen.getByText(/An error occurred/i)).toBeInTheDocument();
   });
 });

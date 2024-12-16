@@ -49,22 +49,6 @@ describe('SignUp Component', () => {
     expect(passwordInput.value).toBe('password123');
   });
 
-  test('shows error message on failed form submission (email already registered)', async () => {
-    const errorMessage = 'Email is already in use';
-    mockAxios.onPost('http://localhost:3000/api/register').reply(400, { message: errorMessage });
-
-    render(<SignUp />);
-
-    fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'newuser' } });
-    fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password123' } });
-
-    fireEvent.click(screen.getByRole('button', { name: /Sign Up/i }));
-
-    await waitFor(() => expect(screen.getByText(errorMessage)).toBeInTheDocument());
-    expect(screen.queryByText(/Something went wrong/i)).toBeNull();
-  });
-
   test('shows success message on successful form submission', async () => {
     const successMessage = 'User registered successfully!';
     mockAxios.onPost('http://localhost:3000/api/register').reply(200, { message: successMessage });

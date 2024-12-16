@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ResumeUpload from '../components/resume/ResumeUpload'; // Adjust path as necessary
 import axios from 'axios';
+import "jest-canvas-mock";
 import MockAdapter from 'axios-mock-adapter';
 
 const mockAxios = new MockAdapter(axios);

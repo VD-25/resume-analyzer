@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const ImprovementSuggestions = ({ feedback, loading, error }) => {
+const ImprovementSuggestions = ({ feedback, loading }) => {
   const [suggestions, setSuggestions] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (feedback && feedback.suggestions) {
