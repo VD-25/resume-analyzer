@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Spinner from '../components/Spinner'; // Make sure the path to Spinner.js is correct
+import Spinner from '../components/shared/Spinner'; // Make sure the path to Spinner.js is correct
 import '@testing-library/jest-dom/extend-expect'; // for the "toBeInTheDocument" matcher
 
 describe('Spinner component', () => {

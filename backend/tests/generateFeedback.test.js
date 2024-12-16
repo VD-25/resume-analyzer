@@ -30,14 +30,14 @@ describe('generateFeedback', () => {
         const resume_text = "Experienced software engineer with Python and Java skills.";
         const job_description = "Looking for a software engineer with experience in Python, AWS, and REST APIs.";
 
-        const result = await generateFeedback(resume_text, job_description);
+        const result = await generateFeedback(resume_text, job_description, []);
 
         expect(result).toEqual({
-            missing_keywords: ['aws', 'rest apis', 'experience'],
+            missing_keywords: ['AWS', 'REST APIs', 'experience'],
             suggestions: [
-                'Highlight your proficiency with "AWS".',
-                'Highlight your proficiency with "REST APIs".',
-                'Consider including content related to "experience".',
+                'Mention any experience/project using "AWS".',
+                'Mention any experience/project using "REST APIs".',
+                'Highlight your proficiency with "experience".',
             ],
         });
     });
@@ -66,8 +66,9 @@ describe('generateFeedback', () => {
         const resume_text = "Experienced software engineer with Python and Java skills.";
         const job_description = "Looking for a software engineer with experience in Python, AWS, and REST APIs.";
 
-        await expect(generateFeedback(resume_text, job_description)).rejects.toThrow(
-            'Error analyzing entities with Google NLP: NLP API error'
-        );
+        await expect(generateFeedback(resume_text, job_description, []))
+            .resolves.toEqual({
+                error: 'Failed to generate feedback: NLP API error'
+            });
     });
 });
