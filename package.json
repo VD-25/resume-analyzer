@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "scripts": {
+    "test:e2e": "cypress open",
+    "start:all": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+  },
+  "devDependencies": {
+    "cypress": "^13.16.1",
+    "cypress-file-upload": "^5.0.8"
+  }
+}
