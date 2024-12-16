@@ -10,7 +10,7 @@ npm install
 cd ../frontend
 npm install
 ```
-1. Create a ```service-account.json``` file in folder ```\backend``` and paste the contents direct messaged via. Discord by PM: Dholakia, Vidhi2
+1. Create a ```service-account.json``` file in folder ```\backend``` and paste the contents direct messaged via. Discord by PM: Dholakia, Vidhi.
 2. Create a ```.env``` file in folder ```\backend``` containing: ```JWT_SECRET="tokenHere"```, tokenHere is your private JWT token direct messaged via. Discord by PM: Dholakia, Vidhi.
 3. On a new line in the newly created ```.env```, paste the following content: ```GOOGLE_APPLICATION_CREDENTIALS=./service-account.json```
 4. Run backend application by opening a new terminal then type: `cd backend && node index.js`
