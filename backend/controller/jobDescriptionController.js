@@ -8,7 +8,7 @@ const jobDescriptionHandler = (req, res) => {
         });
       }
   
-      if (job_description.length > 5000) {
+      if (job_description.length > 10000) {
         return res.status(400).json({
           error: "Job description exceeds character limit.",
         });

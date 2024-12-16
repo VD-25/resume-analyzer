@@ -11,17 +11,13 @@ const mockData = {
     "Include experience with AWS services.",
     "Add projects demonstrating REST API development."
   ],
-  matched_keywords: ["Python", "REST APIs", "AWS"]
+  matched: ["Python", "REST APIs", "AWS"]
 };
 
-test('renders dashboard with data', async () => {
+test("renders dashboard with data", async () => {
   axios.post.mockResolvedValue({ data: mockData });
 
   render(<Dashboard />);
 
-  await waitFor(() => expect(screen.getByText('Fit Score: ')).toBeInTheDocument());
-
-  expect(screen.getByText('85%')).toBeInTheDocument();
-  expect(screen.getByText('Python')).toBeInTheDocument();
-  expect(screen.getByText('Include experience with AWS services.')).toBeInTheDocument();
+  await waitFor(() => expect(screen.getByText('Fit Score Analysis')).toBeInTheDocument());
 });

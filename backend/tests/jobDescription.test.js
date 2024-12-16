@@ -19,8 +19,8 @@ describe("Job Description API", () => {
     expect(response.body.cleanedText).toBe("This is a valid job description.");
   });
 
-  it("should reject job descriptions exceeding 5000 characters", async () => {
-    const longText = "a".repeat(5001);
+  it("should reject job descriptions exceeding 10000 characters", async () => {
+    const longText = "a".repeat(10001);
     const response = await request(app)
       .post("/api/job-description")
       .send({
